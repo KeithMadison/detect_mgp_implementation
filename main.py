@@ -78,4 +78,5 @@ def main():
 		logging.error(f"An error occurred: {e}")
 		raise
 
-main()
+if __name__=="__main__":
+	main()
