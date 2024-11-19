@@ -102,7 +102,7 @@ project/
 
 #### Description
 
-The  `library_of_congress_scraper.py`  script downloads images from the Library of Congress digital collections, filtering by file extension.
+The  `library_of_congress_scraper.py`  script downloads resources from the Library of Congress digital collections, filtering by file extension.
 
 #### How to Use
 
