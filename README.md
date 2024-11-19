@@ -113,22 +113,18 @@ The  `library_of_congress_scraper.py`  script downloads images from the Library 
 1.  **Configure the Scraper:**
     
     Open  `library_of_congress_scraper.py`  and set the following variables:
-    
-    python
-    
-    Copy code
-    
-    `SEARCH_URL = "https://www.loc.gov/maps/?q=fire+insurance&fo=json"
+
+    ```python
+    SEARCH_URL = "https://www.loc.gov/maps/?q=fire+insurance&fo=json"
     FILE_EXTENSION = ".jpg"
-    OUTPUT_DIRECTORY = Path("data/sanborn_images")` 
+    OUTPUT_DIRECTORY = Path("data/sanborn_images")
+    ```
     
 2.  **Run the Script:**
     
-    bash
-    
-    Copy code
-    
-    `python components/library_of_congress_scraper.py` 
+    ```python
+    python components/library_of_congress_scraper.py
+    ```
     
     **Note:**  Ensure that the  `SEARCH_URL`  is a valid API endpoint returning JSON data.
     
@@ -149,14 +145,13 @@ Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circ
     
 2.  **Run the Script:**
     
-    bash
     
-    Copy code
-    
-    `python components/hough_circle_detector.py \
+    ```bash
+    python components/hough_circle_detector.py \
       --input_folder data/sanborn_images \
       --positive_folder output/positive_samples/hough \
-      --negative_folder output/negative_samples/hough` 
+      --negative_folder output/negative_samples/hough
+    ```
     
 
 #### 2.2. Contour-Based Circle Detector
@@ -169,14 +164,13 @@ Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circ
     
 2.  **Run the Script:**
     
-    bash
     
-    Copy code
-    
-    `python components/contour_circle_detector.py \
+    ```bash
+    python components/contour_circle_detector.py \
       --input_folder data/sanborn_images \
       --positive_folder output/positive_samples/contour \
-      --negative_folder output/negative_samples/contour` 
+      --negative_folder output/negative_samples/contour
+    ``` 
     
 
 ### 3. Main Pipeline Script
@@ -191,11 +185,9 @@ The  `main.py`  script orchestrates the entire pipeline, combining scraping and 
     
 2.  **Run the Script:**
     
-    bash
-    
-    Copy code
-    
-    `python main.py` 
+    ```bash
+    python main.py
+    ```
     
 
 ## Design Considerations
