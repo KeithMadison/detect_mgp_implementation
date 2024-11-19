@@ -3,158 +3,204 @@
 
 ## Overview
 
-This repository provides a modular framework for performing the semi-automatic labeling Manufactured Gas Production (MGP) sites present in digitized Sanborn fire insurance maps. It combines image processing techniques and data scraping utilities, including:
+This repository provides a modular framework for semi-automatic labeling of  **Manufactured Gas Production (MGP)**  sites in digitized Sanborn fire insurance maps. By combining advanced image processing techniques and data scraping utilities, this project aims to simplify the identification of MGP sites from large datasets.
 
-- **Circle Detection:** Two complementary methods (Hough Transform and Contour Analysis) to detect circular shapes in images, useful for identifying specific map features.
-- **Library of Congress Resource Scraper:** Automates downloading digital resources, filtering by MIME type, and organizing them for processing.
-- **Pre-Processing Pipeline:** Integrates these tools for semi-automatic labeling, simplifying the identification of MGP sites from large datasets.
+**Key Features:**
 
-The pipeline's modularity makes it adaptable for various workflows beyond MGP site detection.
+-   **Circle Detection Algorithms:**
+    -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images.
+    -   **Contour Analysis Method:**  Employs contour analysis to identify circles based on shape characteristics.
+-   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources, filtering by file type, and organizing them for processing.
+-   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling.
+
+The modularity of the pipeline makes it adaptable for various workflows beyond MGP site detection.
+
+## Table of Contents
+
+-   [Directory Structure](#directory-structure)
+-   [Requirements](#requirements)
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [1. Library of Congress Resource Scraper](#1-library-of-congress-resource-scraper)
+    -   [2. Circle Detection Algorithms](#2-circle-detection-algorithms)
+        -   [2.1. Hough Transform Circle Detector](#21-hough-transform-circle-detector)
+        -   [2.2. Contour-Based Circle Detector](#22-contour-based-circle-detector)
+    -   [3. Main Pipeline Script](#3-main-pipeline-script)
+-   [Design Considerations](#design-considerations)
 
 ## Directory Structure
 
-```
-project/
-│
-├── components/                                     # Core modules for circle detection and scraping
-│   ├── hough_circle_detector.py                    # Implements Hough Transform for circle detection
-│   ├── contour_circle_detector.py                  # Uses contour analysis for circle detection
-│   ├── library_of_congress_resource_scraper.py     # Scraper for Library of Congress resources
-│
-├── sanborn_images/                                 # Subset of Sanborn images used for testing
-│   ├── sanborn0...._...
-│       ├── ...._....-.....jpg                      # Individual Sanborn image file
-│
-├── output/                                         # Processed samples produced during pre-processing
-│   ├── positive_samples/                           # Samples identified as positive (potential MGP sites)
-│   │   ├── hough/                                  # Detected using Hough Circle Detector
-│   │   ├── contour/                                # Detected using Contour Circle Detector
-│   │
-│   ├── negative_samples/                           # Samples identified as negative (non-MGP sites)
-│       ├── hough/                                  # Processed using Hough Circle Detector
-│       ├── contour/                                # Processed using Contour Circle Detector
-│
-├── main.py                                         # Entry point for the MGP detection data pre-processing pipeline
-├── README.md                                       # Project documentation
-└── requirements.txt                                # List of Python dependencies for the project
-```
+bash
 
-___
+Copy code
+
+`project/
+├── components/                           # Core modules for circle detection and scraping
+│   ├── contour_circle_detector.py        # Contour-based circle detection
+│   ├── hough_circle_detector.py          # Hough Transform circle detection
+│   └── library_of_congress_scraper.py    # Scraper for Library of Congress resources
+│
+├── data/
+│   └── sanborn_images/                   # Sanborn images used for processing
+│       ├── image1.jpg
+│       ├── image2.jpg
+│       └── ...
+│
+├── output/                               # Processed samples produced during pre-processing
+│   ├── positive_samples/                 # Samples identified as positive (potential MGP sites)
+│   │   ├── hough/
+│   │   └── contour/
+│   └── negative_samples/                 # Samples identified as negative (non-MGP sites)
+│       ├── hough/
+│       └── contour/
+│
+├── main.py                               # Entry point for the MGP detection pipeline
+├── README.md                             # Project documentation
+├── requirements.txt                      # List of Python dependencies
+└── LICENSE                               # License information` 
 
 ## Requirements
-- **Python**: 3.10 or higher
-- **Dependencies**:
-  - `opencv-python`
-  - `numpy`
-  - `requests`
-  - `tenacity`
-  - `argparse`
-  - `logging`
 
-Install all dependencies using:
-```bash
-pip install -r requirements.txt
-```
+-   **Python**: 3.10 or higher
 
-___
+### Python Dependencies
+
+-   `opencv-python`
+-   `numpy`
+-   `requests`
+-   `tenacity`
+-   `argparse`
+-   `logging`
+-   `concurrent.futures`  (Standard Library)
+-   `pathlib`  (Standard Library)
+-   `uuid`  (Standard Library)
+
+## Installation
+
+1.  **Clone the Repository:**
+    
+    bash
+    
+    Copy code
+    
+    `git clone https://github.com/yourusername/your-repo-name.git
+    cd your-repo-name` 
+    
+2.  **Create a Virtual Environment (Optional but Recommended):**
+    
+    bash
+    
+    Copy code
+    
+    `python3 -m venv venv
+    source venv/bin/activate` 
+    
+3.  **Install Dependencies:**
+    
+    bash
+    
+    Copy code
+    
+    `pip install -r requirements.txt` 
+    
 
 ## Usage
 
-`contour_circle_detector.py`: **Contour-Based Circle Detection Algorithm**
+### 1. Library of Congress Resource Scraper
 
-This script detects circles in images using contours and evaluates their circularity. It crops and saves detected circles or marks images with no circles.
+#### Description
 
-##### Required Libraries
+The  `library_of_congress_scraper.py`  script downloads images from the Library of Congress digital collections, filtering by file extension.
 
--   `opencv-python`
--   `numpy`
--   `concurrent.futures`
-##### How to Use
+#### How to Use
 
-1.  Instantiate the  `ContourCircleDetector`  class with the desired configuration:
+1.  **Configure the Scraper:**
     
-```python
-    detector = ContourCircleDetector(
-    min_radius=10,			# Minimum/maximum radius for detections
-    max_radius=50,			
-    min_circularity=0.85,	# Minimum/maximum circularity for classification as circle
-    max_circularity=1.20
-)
-```
-
-`hough_circle_detector.py`: **Hough-Transform-Based Circle Detection Algorithm**
-
-This script uses OpenCV's `HoughCircles` method to detect circles in images, crop them, and save them to output folders. This is an attempt at a literal implementation of the procedure described in the J. Tollefson et. al. paper.
-
-##### Required Libraries
-
--   `opencv-python`
--   `numpy`
--   `concurrent.futures`
-##### How to Use
-
-1.  Instantiate the `HoughCircleDetector` class with the [required parameters](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d):
+    Open  `library_of_congress_scraper.py`  and set the following variables:
     
-```python
-circle_params = {
-    "dp": 1.2,
-    "minDist": 20,
-    "param1": 50,
-    "param2": 30,
-    "minRadius": 10,
-    "maxRadius": 50
-}
-detector = HoughCircleDetector(circle_params)
-```
+    python
     
-2.  Process a folder of images:
+    Copy code
     
-```python
-detector.process_images_in_folder(
-    input_folder=Path("/path/to/images"),
-    positive_folder=Path("/path/to/save/circles"),
-    negative_folder=Path("/path/to/save/negatives")
-)
-```
-
-#### **`library_of_congress_scraper.py`: Library of Congress Resource Downloader**
-
-##### Description
-
-This script scrapes and downloads files from the Library of Congress digital collections, filtering by MIME type.
-
-##### Required Libraries
-
--   `requests`
--   `mimetypes`
--   `uuid`
--   `logging`
-
-##### How to Use
-
-1.  Create an instance of  `LibraryOfCongressResourceScraper`:
+    `SEARCH_URL = "https://www.loc.gov/maps/?q=fire+insurance&fo=json"
+    FILE_EXTENSION = ".jpg"
+    OUTPUT_DIRECTORY = Path("data/sanborn_images")` 
     
-```python
-    scraper = LibraryOfCongressResourceScraper(
-    search_url="https://loc.gov/maps/?q=fire+insurance",
-    file_extension=".jpg",
-    output_directory=Path("/path/to/save")
-)
-
-```
-
+2.  **Run the Script:**
     
-2.  Initiate the download process:
+    bash
     
-```python
-	scraper.download_files()
-```
+    Copy code
+    
+    `python components/library_of_congress_scraper.py` 
+    
+    **Note:**  Ensure that the  `SEARCH_URL`  is a valid API endpoint returning JSON data.
     
 
-⚠️ **Caution:** Ensure the search URL is valid and points to a Library of Congress API endpoint. The values  `REQUEST_DELAY`  and  `DOWNLOAD_DELAY`  are necessary for throttling, and are magic numbers provided by the Library of Congress.
+### 2. Circle Detection Algorithms
 
----
+#### Description
 
+Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circular features in images, indicative of potential MGP sites.
+
+#### 2.1. Hough Transform Circle Detector
+
+**Usage:**
+
+1.  **Configure Parameters (Optional):**
+    
+    You can adjust the detection parameters directly in the script or via command-line arguments.
+    
+2.  **Run the Script:**
+    
+    bash
+    
+    Copy code
+    
+    `python components/hough_circle_detector.py \
+      --input_folder data/sanborn_images \
+      --positive_folder output/positive_samples/hough \
+      --negative_folder output/negative_samples/hough` 
+    
+
+#### 2.2. Contour-Based Circle Detector
+
+**Usage:**
+
+1.  **Configure Parameters (Optional):**
+    
+    Adjust parameters  `min_radius`,  `max_radius`,  `min_circularity`, and  `max_circularity`  as needed.
+    
+2.  **Run the Script:**
+    
+    bash
+    
+    Copy code
+    
+    `python components/contour_circle_detector.py \
+      --input_folder data/sanborn_images \
+      --positive_folder output/positive_samples/contour \
+      --negative_folder output/negative_samples/contour` 
+    
+
+### 3. Main Pipeline Script
+
+The  `main.py`  script orchestrates the entire pipeline, combining scraping and circle detection.
+
+**Usage:**
+
+1.  **Ensure All Configurations are Set:**
+    
+    Check that all components are correctly configured.
+    
+2.  **Run the Script:**
+    
+    bash
+    
+    Copy code
+    
+    `python main.py` 
+    
 
 ## Design Considerations
 
