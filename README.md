@@ -3,12 +3,10 @@
 ## Overview
 This repository contains tools for:
 1. Detecting circular shapes in images using both **Hough Transform** and **Contour Analysis** methods.
-2. Downloading image resources from the **Library of Congress** (LOC) using a customizable scraping utility.
+2. Downloading digital resources from the **Library of Congress** using a customizable scraping utility.
 3. A data pre-processing pipeline which combines the above to facilitate the semi-automatic labeling of manufactured gas production (MGP) sites present in digitized Sanborn fire insurance maps made available by the Library of Congress.
 
-Each tool is modular, allowing flexibility in usage for diverse image processing and data collection workflows.
-
----
+The pipeline is designed to be modular, allowing flexibility in usage for diverse image processing and data collection workflows. Though I employ it here for use in the detection of MGP sites, its components are highly independent of the broader data pre-processing pipeline.
 
 ## Features
 
@@ -22,10 +20,9 @@ Each tool is modular, allowing flexibility in usage for diverse image processing
   - Filters by circularity and area thresholds.
   - Supports batch processing of images in directories.
 
-### **LOC Image Downloader**
+### **Library of Congress Resource Scraper**
 - Scrapes and downloads resources from the **Library of Congress API**.
 - Filters files by specific MIME types (e.g., JPEG, TIFF, PDF).
-- Handles paginated results and retries on failure using exponential backoff.
 - Ensures organized storage with unique filenames and directory structure.
 
 ---
@@ -35,27 +32,27 @@ Each tool is modular, allowing flexibility in usage for diverse image processing
 ```
 project/
 │
-├── components/                       # Core modules for circle detection and scraping
-│   ├── hough_circle_detector.py      # Implements Hough Transform for circle detection
-│   ├── contour_circle_detector.py    # Uses contour analysis for circle detection
-│   ├── loc_scraper.py                # Scraper for Library of Congress resources
+├── components/                       							# Core modules for circle detection and scraping
+│   ├── hough_circle_detector.py      							# Implements Hough Transform for circle detection
+│   ├── contour_circle_detector.py    							# Uses contour analysis for circle detection
+│   ├── library_of_congress_resource_scraper.py                 # Scraper for Library of Congress resources
 │
-├── sanborn_images/                   # Subset of Sanborn images used for testing
+├── sanborn_images/                   							# Subset of Sanborn images used for testing
 │   ├── sanborn0...._...              
-│       ├── ...._....-.....jpg        # Individual Sanborn image file
+│       ├── ...._....-.....jpg        							# Individual Sanborn image file
 │
-├── output/                           # Processed samples produced during pre-processing
-│   ├── positive_samples/             # Samples identified as positive (potential MGP sites)
-│   │   ├── hough/                    # Detected using Hough Circle Detector
-│   │   ├── contour/                  # Detected using Contour Circle Detector
+├── output/                           							# Processed samples produced during pre-processing
+│   ├── positive_samples/             							# Samples identified as positive (potential MGP sites)
+│   │   ├── hough/                    							# Detected using Hough Circle Detector
+│   │   ├── contour/                  							# Detected using Contour Circle Detector
 │   │
-│   ├── negative_samples/             # Samples identified as negative (non-MGP sites)
-│       ├── hough/                    # Processed using Hough Circle Detector
-│       ├── contour/                  # Processed using Contour Circle Detector
+│   ├── negative_samples/             							# Samples identified as negative (non-MGP sites)
+│       ├── hough/                    							# Processed using Hough Circle Detector
+│       ├── contour/                  							# Processed using Contour Circle Detector
 │
-├── main.py                           # Entry point for the MGP detection data pre-processing pipeline
-├── README.md                         # Project documentation
-└── requirements.txt                  # List of Python dependencies for the project
+├── main.py                           							# Entry point for the MGP detection data pre-processing pipeline
+├── README.md                         							# Project documentation
+└── requirements.txt                 							# List of Python dependencies for the project
 ```
 
 ___
@@ -77,49 +74,70 @@ pip install -r requirements.txt
 
 ___
 
-# How to Run
 
-## Circle Detection
+## Design Considerations
 
-### Hough Circle Detector
-This detector uses the Hough Transform to identify circular shapes. Run it as follows:
-```bash
-python hough_circle_detector.py --input_folder ./images --output_positive ./output/positive --output_negative ./output/negative --params ./params.json
+Write a summary here. Some of these are obvious, but I will mention them here for completeness. 
+
+###  1. **Documentation**
+
+ 
+
+Good code is well-documented. Documentation comprises both an explicit accounting in the form of formal, external documentation (e.g., user guides and, in this case, README files) and inline comments that clarify intent, logic, and complex sections of the code for future maintainers. Well-documented is not synonymous with extensively documented, however, and oftentimes good code explains itself without the need for excessive comments or external documentation. I strived for this by adhering to the following:
+
+  
+
+1. **Explicit Types and Return Types:** Using strongly typed variables and annotating functions with explicit return types.
+
+2. **Intuitive Variable and Function Names:** Choosing descriptive names that convey the purpose of the variable, function, or class.
+
+3. **Explicit Error and Logging Messages:** Employing structured logging and writing detailed error messages that explain what went wrong, where, and (where possible) why.
+
+  Take, for example, the following function. Despite having minimal documentation, it is immediately clear what this function accomplishes and how. The expressive function name, along with explicit argument and return types, obviates the need for a verbose docstring. Intuitive variable names (e.g., unique_suffix) further enhance clarity. Making use of such libraries as `pathlib` ensures that the code is expressive and clearly conveys intent:
+
+  
+
+```python
+
+@staticmethod
+
+def _create_unique_filename(file_url: str, file_extension: str, save_path: Path) -> Path:
+
+parsed_url = urlparse(file_url)
+
+filename = Path(parsed_url.path).name
+
+# Fallback to a default name if the URL path does not have a file name
+
+if not filename:
+
+filename = f"file_{uuid.uuid4().hex}{file_extension}"
+
+file_path = save_path / filename
+
+if file_path.exists():
+
+unique_suffix = uuid.uuid4().hex
+
+file_path = file_path.with_stem(f"{file_path.stem}_{unique_suffix}")
+
+  
+
+return file_path
+
 ```
-**Explanation**:
-- `--input_folder`: Path to the folder containing images to process.
-- `--output_positive`: Folder to save cropped images containing detected circles.
-- `--output_negative`: Folder to save full images where no circles are detected.
-- `--params`: JSON file containing circle detection parameters.
 
-**Example JSON Configuration**:
-```json
-{
-    "dp": 1.5,
-    "minDist": 20,
-    "param1": 100,
-    "param2": 30,
-    "minRadius": 10,
-    "maxRadius": 100
-}
-```
+### 2. Modularity & Reusability
 
-### Contour Circle Detector
-This detector identifies circular shapes based on their geometric properties:
-```bash
-python contour_circle_detector.py --input_folder ./images --output_positive ./output/positive --output_negative ./output/negative
-```
-**Explanation**:
-- ADD EXPLANATION
+Good code is (more often than not) highly modular. Modular code is not only easier to understand and maintain, but also serves as the foundation for scalable and efficient collaborative development. I strove for modularity and reusability in writing this pre-processing pipeline, and achieved it by adhering to the Single Responsibility Principle. The components are loosely coupled, interacting only through well-defined interfaces:
 
----
+- `main.py`: The script `main.py` orchestrates the data pipeline,  handling high-level workflows and interacting with the detection classes through their public APIs (`process_images_in_folder`) without requiring any knowledge of their internal workings. Adding a new detection method would only require creating a new class/module without altering existing components.
+- `XXX_circle_detector.py`: The circle detection algorithms (`hough_circle_detector.py` and `contour_circle_detector.py`) encapsulate of functionality into classes, ensuring that each class can be independently developed, tested, and reused. While I employ it here for the detection of MGP sites, any folder of images could be passed to either of these algorithms independently of the data preprocessing pipeline. Both detection classes utilize  `ThreadPoolExecutor`  for parallel processing of images, abstracting concurrency management and making it reusable for different workflows.
+-  `library_of_congress_resource_scraper.py`: The class used for scraping the Sanborn map digitizations is designed to facilitate the scraping of *any* resources from the Library of Congress digital collections.
 
-## LOC Image Downloader
-This script downloads files from the Library of Congress based on search criteria:
-```bash
-python loc_scraper.py --search_url "https://www.loc.gov/search" --file_extension jpg --save_to ./downloads
-```
-**Explanation**:
-- `--search_url`: API endpoint or LOC query to scrape resources.
-- `--file_extension`: Desired file type (e.g., `jpg`, `png`, `pdf`).
-- `--save_to`: Directory where files will be stored.
+*NOTE TO SELF: Should discuss adhering to SRP within classes and functions as well...* Minimize Code Duplication, etc.
+
+### 3. Robustness & Reliability
+1. **Robust Error Handling:**
+2. **Comprehensive Coverage of Edge Cases:**
+3. **Testing and Validation:**
