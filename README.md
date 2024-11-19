@@ -35,7 +35,7 @@ project/
 ├── components/                       							# Core modules for circle detection and scraping
 │   ├── hough_circle_detector.py      							# Implements Hough Transform for circle detection
 │   ├── contour_circle_detector.py    							# Uses contour analysis for circle detection
-│   ├── library_of_congress_resource_scraper.py                 # Scraper for Library of Congress resources
+│   ├── library_of_congress_resource_scraper.py     # Scraper for Library of Congress resources
 │
 ├── sanborn_images/                   							# Subset of Sanborn images used for testing
 │   ├── sanborn0...._...              
@@ -52,7 +52,7 @@ project/
 │
 ├── main.py                           							# Entry point for the MGP detection data pre-processing pipeline
 ├── README.md                         							# Project documentation
-└── requirements.txt                 							# List of Python dependencies for the project
+└── requirements.txt                 							  # List of Python dependencies for the project
 ```
 
 ___
