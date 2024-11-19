@@ -120,6 +120,10 @@ pip install -r requirements.txt
 ___
 
 
+<div style="color: black; background-color: yellow; padding: 10px; border-radius: 5px;">
+⚠️ **Caution:** Proceed carefully.
+</div>
+
 ## Design Considerations
 
 The design of this pipeline emphasizes clarity, modularity, and robustness. By adhering to best practices in documentation, modularity, and error handling, the code is both user-friendly and highly maintainable. The components are purposefully structured to work independently, facilitating reuse and adaptation in different workflows beyond the immediate scope of MGP site detection. I have categorized my most significant design considerations as follows. Some of these are obvious, however I will mention them here for completeness.
