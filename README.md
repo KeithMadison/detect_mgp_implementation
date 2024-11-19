@@ -74,3 +74,52 @@ Install all dependencies using:
 ```bash
 pip install -r requirements.txt
 ```
+
+___
+
+# How to Run
+
+## Circle Detection
+
+### Hough Circle Detector
+This detector uses the Hough Transform to identify circular shapes. Run it as follows:
+```bash
+python hough_circle_detector.py --input_folder ./images --output_positive ./output/positive --output_negative ./output/negative --params ./params.json
+```
+**Explanation**:
+- `--input_folder`: Path to the folder containing images to process.
+- `--output_positive`: Folder to save cropped images containing detected circles.
+- `--output_negative`: Folder to save full images where no circles are detected.
+- `--params`: JSON file containing circle detection parameters.
+
+**Example JSON Configuration**:
+```json
+{
+    "dp": 1.5,
+    "minDist": 20,
+    "param1": 100,
+    "param2": 30,
+    "minRadius": 10,
+    "maxRadius": 100
+}
+```
+
+### Contour Circle Detector
+This detector identifies circular shapes based on their geometric properties:
+```bash
+python contour_circle_detector.py --input_folder ./images --output_positive ./output/positive --output_negative ./output/negative
+```
+**Explanation**:
+- ADD EXPLANATION
+
+---
+
+## LOC Image Downloader
+This script downloads files from the Library of Congress based on search criteria:
+```bash
+python loc_scraper.py --search_url "https://www.loc.gov/search" --file_extension jpg --save_to ./downloads
+```
+**Explanation**:
+- `--search_url`: API endpoint or LOC query to scrape resources.
+- `--file_extension`: Desired file type (e.g., `jpg`, `png`, `pdf`).
+- `--save_to`: Directory where files will be stored.
