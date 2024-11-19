@@ -30,10 +30,6 @@ The modularity of the pipeline makes it adaptable for various workflows beyond M
 
 ## Directory Structure
 
-bash
-
-Copy code
-
 ```
 project/
 ├── components/                           # Core modules for circle detection and scraping
