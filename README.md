@@ -1,10 +1,6 @@
 
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
 
-<div class="alert alert-{{ type }}">
-  {{ text }}
-</div>
-
 ## Overview
 
 This repository provides a modular framework for performing the semi-automatic labeling Manufactured Gas Production (MGP) sites present in digitized Sanborn fire insurance maps. It combines image processing techniques and data scraping utilities, including:
@@ -31,7 +27,7 @@ This script detects circles in images using contours and evaluates their circula
 1.  Instantiate the  `ContourCircleDetector`  class with the desired configuration:
     
 ```python
-detector = ContourCircleDetector(
+    detector = ContourCircleDetector(
     min_radius=10,			# Minimum/maximum radius for detections
     max_radius=50,			
     min_circularity=0.85,	# Minimum/maximum circularity for classification as circle
@@ -73,6 +69,42 @@ detector.process_images_in_folder(
     negative_folder=Path("/path/to/save/negatives")
 )
 ```
+
+#### **`library_of_congress_scraper.py`: Library of Congress Resource Downloader**
+
+##### Description
+
+This script scrapes and downloads files from the Library of Congress digital collections, filtering by MIME type.
+
+##### Required Libraries
+
+-   `requests`
+-   `mimetypes`
+-   `uuid`
+-   `logging`
+
+##### How to Use
+
+1.  Create an instance of  `LibraryOfCongressResourceScraper`:
+    
+```python
+    scraper = LibraryOfCongressResourceScraper(
+    search_url="https://loc.gov/maps/?q=fire+insurance",
+    file_extension=".jpg",
+    output_directory=Path("/path/to/save")
+)
+
+```
+
+    
+2.  Initiate the download process:
+    
+```python
+	scraper.download_files()
+```
+    
+
+⚠️ **Caution:** Ensure the search URL is valid and points to a Library of Congress API endpoint. The values  `REQUEST_DELAY`  and  `DOWNLOAD_DELAY`  are necessary for throttling, and are magic numbers provided by the Library of Congress.
 
 ---
 
@@ -123,10 +155,6 @@ pip install -r requirements.txt
 
 ___
 
-
-<div style="color: black; background-color: yellow; padding: 10px; border-radius: 5px;">
-⚠️ **Caution:** Proceed carefully.
-</div>
 
 ## Design Considerations
 
