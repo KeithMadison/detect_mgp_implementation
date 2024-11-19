@@ -10,8 +10,7 @@ logging.basicConfig(
 	datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-def download_data():
-	print("WoooOOoooo")
+def download_data() -> None:
 	search_url = 'https://www.loc.gov/collections/sanborn-maps/?dates=1899/1899&fa=location:springfield'
 	file_extension = '.jpg'
 	save_to = './sanborn_images/'
