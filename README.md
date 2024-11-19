@@ -1,6 +1,10 @@
 
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
 
+<div class="alert alert-{{ type }}">
+  {{ text }}
+</div>
+
 ## Overview
 
 This repository provides a modular framework for performing the semi-automatic labeling Manufactured Gas Production (MGP) sites present in digitized Sanborn fire insurance maps. It combines image processing techniques and data scraping utilities, including:
