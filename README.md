@@ -27,7 +27,7 @@ This script detects circles in images using contours and evaluates their circula
 1.  Instantiate the  `ContourCircleDetector`  class with the desired configuration:
     
 ```python
-    detector = ContourCircleDetector(
+detector = ContourCircleDetector(
     min_radius=10,			# Minimum/maximum radius for detections
     max_radius=50,			
     min_circularity=0.85,	# Minimum/maximum circularity for classification as circle
