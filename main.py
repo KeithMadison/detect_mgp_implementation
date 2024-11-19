@@ -1,6 +1,6 @@
 from components.hough_circle_detector import HoughCircleDetector
 from components.contour_circle_detector import ContourCircleDetector
-from components.loc_scraper import LOCImageDownloader
+from components.loc_image_downloader import LOCImageDownloader
 from pathlib import Path
 import logging
 
