@@ -1,133 +1,88 @@
 import cv2
 import numpy as np
-from typing import Optional, Dict, Any
 from pathlib import Path
+from typing import Dict, Any, Optional, List
 import logging
-import argparse
+from concurrent.futures import ThreadPoolExecutor
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 class HoughCircleDetector:
-    """
-    A class to detect circles in images using the HoughCircles method from OpenCV.
-    """
+	'''Detect circles in images using OpenCV's HoughCircles. This is an attempt at a literal implementation of the detector described in the J. Tollefson et.al. paper.'''
 
-    SUPPORTED_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.bmp', '.tiff')
+	SUPPORTED_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.bmp', '.tiff')
 
-    def __init__(self, circle_params: Dict[str, Any], margin: float = 0.2) -> None:
-        """
-        Initializes the HoughCircleDetector with specified HoughCircles parameters.
+	def __init__(self, circle_params: Dict[str, Any], margin: float = 0.2) -> None:
+		if margin < 0:
+			raise ValueError("Margin must be non-negative.")
+		required_params = {'dp', 'minDist', 'param1', 'param2', 'minRadius', 'maxRadius'}
+		missing = required_params - circle_params.keys()
+		if missing:
+			raise ValueError(f"Missing required circle parameters: {missing}")
 
-        Args:
-            circle_params (Dict[str, Any]): Parameters for the cv2.HoughCircles method.
-            margin (float): Proportional margin to include around detected circles when cropping.
-        """
-        required_params = {'dp', 'minDist', 'param1', 'param2', 'minRadius', 'maxRadius'}
-        if not required_params.issubset(circle_params.keys()):
-            missing = required_params - circle_params.keys()
-            raise ValueError(f"Missing required circle parameters: {missing}")
+		self.circle_params = circle_params
+		self.margin = margin
 
-        self.circle_params = circle_params
-        self.margin = margin
+	def detect_circles(self, image: np.ndarray) -> Optional[np.ndarray]:
+		'''Detect circles using the HoughCircles method.'''
+		if len(image.shape) != 2:
+			raise ValueError("Input image must be a grayscale image.")
+		return cv2.HoughCircles(
+			image,
+			cv2.HOUGH_GRADIENT,
+			dp=self.circle_params['dp'],
+			minDist=self.circle_params['minDist'],
+			param1=self.circle_params['param1'],
+			param2=self.circle_params['param2'],
+			minRadius=self.circle_params['minRadius'],
+			maxRadius=self.circle_params['maxRadius']
+		)
 
-    def detect_circles(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """
-        Detects circles in a grayscale image.
+	def save_image(self, image: np.ndarray, path: Path) -> None:
+		try:
+			if not cv2.imwrite(str(path), image):
+				logging.error(f"Failed to save image to {path}")
+		except Exception as e:
+			logging.error(f"Error saving image to {path}: {e}")
 
-        Args:
-            image (np.ndarray): Grayscale image in which to detect circles.
+	def crop_circle(self, image: np.ndarray, x: int, y: int, r: int) -> np.ndarray:
+		"""Crop a circle from an image with margin."""
+		margin = int(self.margin * r)
+		x1 = max(0, x - r - margin)
+		y1 = max(0, y - r - margin)
+		x2 = min(image.shape[1], x + r + margin)
+		y2 = min(image.shape[0], y + r + margin)
+		return image[y1:y2, x1:x2]
 
-        Returns:
-            Optional[np.ndarray]: Array of detected circles, or None if no circles are found.
-        """
-        if len(image.shape) != 2:
-            raise ValueError("Input image must be a grayscale image.")
+	def process_image(self, image_path: Path, positive_folder: Path, negative_folder: Path) -> None:
+		try:
+			image = cv2.imread(str(image_path), cv2.IMREAD_GRAYSCALE)
+			if image is None:
+				raise FileNotFoundError(f"Unable to read image: {image_path}")
 
-        circles = cv2.HoughCircles(
-            image,
-            cv2.HOUGH_GRADIENT,
-            dp=self.circle_params['dp'],
-            minDist=self.circle_params['minDist'],
-            param1=self.circle_params['param1'],
-            param2=self.circle_params['param2'],
-            minRadius=self.circle_params['minRadius'],
-            maxRadius=self.circle_params['maxRadius']
-        )
-        return circles
+			circles = self.detect_circles(image)
+			if circles is not None:
+				for i, (x, y, r) in enumerate(np.round(circles[0, :]).astype('int')):
+					cropped = self.crop_circle(image, x, y, r)
+					self.save_image(cropped, positive_folder / f"{image_path.stem}_circle_{i}.png")
+			else:
+				self.save_image(image, negative_folder / image_path.name)
+		except Exception as e:
+			logging.error(f"Error processing image {image_path}: {e}")
 
-    def process_image(self, image_path: Path, output_positive_folder: Path, output_negative_folder: Path) -> None:
-        """
-        Processes a single image: detects circles and saves positive or negative samples accordingly.
+	def process_images_in_folder(self, input_folder: Path, positive_folder: Path, negative_folder: Path) -> None:
+		positive_folder.mkdir(parents=True, exist_ok=True)
+		negative_folder.mkdir(parents=True, exist_ok=True)
 
-        Args:
-            image_path (Path): Path to the input image.
-            output_positive_folder (Path): Directory to save positive samples (images with circles).
-            output_negative_folder (Path): Directory to save negative samples (images without circles).
-        """
-        try:
-            # Read the image in grayscale
-            image = cv2.imread(str(image_path), cv2.IMREAD_GRAYSCALE)
-            if image is None:
-                raise FileNotFoundError(f"Unable to read image: {image_path}")
+		image_files = [file for file in input_folder.rglob("*") if file.suffix.lower() in self.SUPPORTED_EXTENSIONS]
+		total_files = len(image_files)
 
-            # Detect circles in the image
-            circles = self.detect_circles(image)
+		def process_file(file: Path):
+			self.process_image(file, positive_folder, negative_folder)
+			logging.info(f"Processed {file.name}")
 
-            if circles is not None:
-                # Convert circle parameters (x, y, radius) to integers
-                circles = np.round(circles[0, :]).astype('int')
+		with ThreadPoolExecutor() as executor:
+			executor.map(process_file, image_files)
 
-                # Save each detected circle as an image, with specified margin
-                for i, (x, y, r) in enumerate(circles):
-                    margin = int(self.margin * r)
-                    x1 = max(0, x - r - margin)
-                    y1 = max(0, y - r - margin)
-                    x2 = min(image.shape[1], x + r + margin)
-                    y2 = min(image.shape[0], y + r + margin)
-
-                    cropped_circle_image = image[y1:y2, x1:x2]
-                    filename = image_path.stem
-                    output_path = output_positive_folder / f"{filename}_circle_{i}.png"
-                    success = cv2.imwrite(str(output_path), cropped_circle_image)
-                    if not success:
-                        logging.error(f"Failed to save image to {output_path}")
-            else:
-                # Save the full image as a negative sample if no circles are detected
-                output_path = output_negative_folder / image_path.name
-                success = cv2.imwrite(str(output_path), image)
-                if not success:
-                    logging.error(f"Failed to save image to {output_path}")
-
-        except FileNotFoundError as e:
-            logging.error(f"File not found: {image_path}")
-        except cv2.error as e:
-            logging.error(f"OpenCV error processing {image_path}: {e}", exc_info=True)
-        except Exception as e:
-            logging.error(f"Unexpected error processing {image_path}: {e}", exc_info=True)
-
-    def process_folder(self, input_folder: Path, output_positive_folder: Path, output_negative_folder: Path) -> None:
-        """
-        Processes all images in the specified input folder.
-
-        Args:
-            input_folder (Path): Directory containing input images.
-            output_positive_folder (Path): Directory to save positive samples.
-            output_negative_folder (Path): Directory to save negative samples.
-        """
-        # Create output directories if they don't exist
-        output_positive_folder.mkdir(parents=True, exist_ok=True)
-        output_negative_folder.mkdir(parents=True, exist_ok=True)
-
-        # Traverse the directory tree
-        image_files = list(input_folder.rglob("*"))
-        total_files = len(image_files)
-        processed_files = 0
-
-        for image_file in image_files:
-            if image_file.suffix.lower() in self.SUPPORTED_EXTENSIONS:
-                self.process_image(image_file, output_positive_folder, output_negative_folder)
-                processed_files += 1
-                logging.info(f"Processed {processed_files}/{total_files} images.")
-
-        logging.info("Processing complete.")
+		logging.info(f"Processed {total_files} images in total.")
