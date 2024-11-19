@@ -1,11 +1,12 @@
-from urllib.parse import urlparse
-import requests
 import logging
 import mimetypes
-import uuid
 import time
-from typing import List, Optional, Any
+import uuid
 from pathlib import Path
+from typing import Any, List, Optional
+from urllib.parse import urlparse
+
+import requests
 
 logging.basicConfig(
 	level=logging.INFO,
