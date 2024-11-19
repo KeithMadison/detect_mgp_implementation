@@ -147,6 +147,7 @@ class LibraryOfCongressResourceScraper:
 
 	@staticmethod
 	def _flatten_files(files: List[Any]) -> List[dict]:
+		'''Flattens a nested list into a single flat list. The data structure returned by the Library of Congress API is often nested'''
 		flattened = []
 
 		def _flatten(items):
