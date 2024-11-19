@@ -131,4 +131,4 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 ### 3. Robustness & Reliability
 1. **Robust Error Handling:**
 2. **Comprehensive Coverage of Edge Cases:**
-3. **Testing and Validation:**
+3. **Testing and Validation:** While formal unit tests are not yet included (in the name of time constraints), all code was written with the intent to facilitate ease of testing. Functions and classes are designed to be modular and self-contained, with clear input and output parameters, making them straightforward to test individually. The use of explicit type annotations further aids in isolating components for testing. By minimizing side effects and external dependencies within functions, the codebase allows for the use of mocking and stubbing techniques in future unit tests. In many cases, a simple **doctest** would be trivial to add and run.
