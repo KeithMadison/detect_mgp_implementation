@@ -35,8 +35,8 @@ def main():
     circle_params = {
         'dp': 1.2,              # Inverse ratio of accumulator resolution to image resolution
         'minDist': 20,          # Minimum distance between detected centers (pixels)
-        'param1': 220,          # Threshold for Canny edge detector
-        'param2': 115,          # Accumulator threshold for circle centers
+        'param1': 300,          # Threshold for Canny edge detector
+        'param2': 140,          # Accumulator threshold for circle centers
         'minRadius': min_radius,
         'maxRadius': max_radius
     }
