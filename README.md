@@ -129,6 +129,10 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 2. **Adherence to SRP within Classes and Functions:** Within each class and function, responsibilities are kept focused. Methods are designed to perform a single task, which simplifies testing and reduces code duplication. *Note to self: include explicit example here*
 
 ### 3. Robustness & Reliability
-1. **Robust Error Handling:**
-2. **Comprehensive Coverage of Edge Cases:**
-3. **Testing and Validation:** While formal unit tests are not yet included (in the name of time constraints), all code was written with the intent to facilitate ease of testing. Functions and classes are designed to be modular and self-contained, with clear input and output parameters, making them straightforward to test individually. The use of explicit type annotations further aids in isolating components for testing. By minimizing side effects and external dependencies within functions, the codebase allows for the use of mocking and stubbing techniques in future unit tests. In many cases, a simple **doctest** would be trivial to add and run.
+1. **Robust Error Handling:** I employed comprehensive error handling to manage various potential issues. Critical operations, such as creating directories or downloading files, include try-except blocks to handle OS-level or HTTP errors gracefully. Error logs include both error details and traceback information when appropriate, aiding in troubleshooting.
+2. **Comprehensive Coverage of Edge Cases:** I anticipated and addressed common edge cases, including (but not limited to):
+	- Invalid or missing URLs, where fallback or specific error messages guide corrective action.
+	- Situations where API responses are malformed or lack the expected content type (application/json).
+	- Scenarios where files already exist in the output directory, handled by appending unique suffixes to filenames.
+	- Nested data structures returned by the Library of Congress API, flattened using recursive logic for consistent processing.
+3. **Testing and Validation:** While formal unit tests are not yet included (due to time constraints), all code was written with the intent to facilitate ease of testing. Functions and classes are modular and self-contained, with clear input and output parameters, making them straightforward to test independently. Explicit type annotations further aid in isolating components for testing. By minimizing side effects and external dependencies, the codebase allows for mocking and stubbing techniques in future unit tests. Additionally, many methods (e.g, `_flatten_file`) are deterministic and could be easily validated using simple doctests or lightweight testing frameworks.
