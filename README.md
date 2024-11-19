@@ -11,6 +11,53 @@ This repository provides a modular framework for performing the semi-automatic l
 
 The pipeline's modularity makes it adaptable for various workflows beyond MGP site detection.
 
+## Directory Structure
+
+```
+project/
+│
+├── components/                                     # Core modules for circle detection and scraping
+│   ├── hough_circle_detector.py                    # Implements Hough Transform for circle detection
+│   ├── contour_circle_detector.py                  # Uses contour analysis for circle detection
+│   ├── library_of_congress_resource_scraper.py     # Scraper for Library of Congress resources
+│
+├── sanborn_images/                                 # Subset of Sanborn images used for testing
+│   ├── sanborn0...._...
+│       ├── ...._....-.....jpg                      # Individual Sanborn image file
+│
+├── output/                                         # Processed samples produced during pre-processing
+│   ├── positive_samples/                           # Samples identified as positive (potential MGP sites)
+│   │   ├── hough/                                  # Detected using Hough Circle Detector
+│   │   ├── contour/                                # Detected using Contour Circle Detector
+│   │
+│   ├── negative_samples/                           # Samples identified as negative (non-MGP sites)
+│       ├── hough/                                  # Processed using Hough Circle Detector
+│       ├── contour/                                # Processed using Contour Circle Detector
+│
+├── main.py                                         # Entry point for the MGP detection data pre-processing pipeline
+├── README.md                                       # Project documentation
+└── requirements.txt                                # List of Python dependencies for the project
+```
+
+___
+
+## Requirements
+- **Python**: 3.10 or higher
+- **Dependencies**:
+  - `opencv-python`
+  - `numpy`
+  - `requests`
+  - `tenacity`
+  - `argparse`
+  - `logging`
+
+Install all dependencies using:
+```bash
+pip install -r requirements.txt
+```
+
+___
+
 ## Usage
 
 `contour_circle_detector.py`: **Contour-Based Circle Detection Algorithm**
@@ -107,53 +154,6 @@ This script scrapes and downloads files from the Library of Congress digital col
 ⚠️ **Caution:** Ensure the search URL is valid and points to a Library of Congress API endpoint. The values  `REQUEST_DELAY`  and  `DOWNLOAD_DELAY`  are necessary for throttling, and are magic numbers provided by the Library of Congress.
 
 ---
-
-## Directory Structure
-
-```
-project/
-│
-├── components/                                     # Core modules for circle detection and scraping
-│   ├── hough_circle_detector.py                    # Implements Hough Transform for circle detection
-│   ├── contour_circle_detector.py                  # Uses contour analysis for circle detection
-│   ├── library_of_congress_resource_scraper.py     # Scraper for Library of Congress resources
-│
-├── sanborn_images/                                 # Subset of Sanborn images used for testing
-│   ├── sanborn0...._...
-│       ├── ...._....-.....jpg                      # Individual Sanborn image file
-│
-├── output/                                         # Processed samples produced during pre-processing
-│   ├── positive_samples/                           # Samples identified as positive (potential MGP sites)
-│   │   ├── hough/                                  # Detected using Hough Circle Detector
-│   │   ├── contour/                                # Detected using Contour Circle Detector
-│   │
-│   ├── negative_samples/                           # Samples identified as negative (non-MGP sites)
-│       ├── hough/                                  # Processed using Hough Circle Detector
-│       ├── contour/                                # Processed using Contour Circle Detector
-│
-├── main.py                                         # Entry point for the MGP detection data pre-processing pipeline
-├── README.md                                       # Project documentation
-└── requirements.txt                                # List of Python dependencies for the project
-```
-
-___
-
-## Requirements
-- **Python**: 3.10 or higher
-- **Dependencies**:
-  - `opencv-python`
-  - `numpy`
-  - `requests`
-  - `tenacity`
-  - `argparse`
-  - `logging`
-
-Install all dependencies using:
-```bash
-pip install -r requirements.txt
-```
-
-___
 
 
 ## Design Considerations
