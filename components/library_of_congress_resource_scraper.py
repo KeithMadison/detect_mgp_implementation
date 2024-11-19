@@ -14,9 +14,27 @@ logging.basicConfig(
 )
 
 class LibraryOfCongressResourceScraper:
-	'''
-	A scraper class for downloading files from the Library of Congress digital collections.
-	Heavily modified from: (https://github.com/LibraryOfCongress/data-exploration/tree/master/loc.gov%20JSON%20API/maps)
+	''' 
+	A scraper for downloading files from the Library of Congress digital collections.
+    	Heavily modified from: https://github.com/LibraryOfCongress/data-exploration/tree/master/loc.gov%20JSON%20API/maps 
+
+	Class Invariants:
+		- Ensures all downloaded files conform to the specified MIME type.
+		- Files are stored in the designated directory with unique filename.
+ 		- Respects server-imposed request delays (provided by Library of Congress).
+
+ 	Parameters:
+		search_path: The base URL for the search query.
+		file_extension: Desired file extension for downloads (e.g., '.jpg').
+		output_directory (Path): Directory where downloaded files will be saved.
+    
+	Example:
+		scraper = LibraryOfCongressResourceScraper(
+		search_path="https://loc.gov/maps/?q=fire+insurance",
+		file_extension=".jpg",
+		output_directory=Path("/downloads")
+		)
+		scraper.download_files()
 	'''
 
 	# These magic numbers are provided by the Library of Congress (https://guides.loc.gov/fire-insurance-maps/sanborn-downloading).
@@ -27,7 +45,7 @@ class LibraryOfCongressResourceScraper:
 
 	def __init__(
 		     self,
-		     search_path: str,
+		     search_url: str,
 		     file_extension: str,
 		     output_directory: Path
 	):
@@ -174,7 +192,7 @@ class LibraryOfCongressResourceScraper:
 
 		for index, file_info in enumerate(file_urls, start=1):
 			file_url = file_info["file_url"]
-			item_id = file_info["item_id"].strip("/").split("/")[-1]
+			item_id = Path(file_info["item_id"]).parts[-1]
 			save_path = self.output_directory / item_id
 			save_path.mkdir(parents=True, exist_ok=True)
 
