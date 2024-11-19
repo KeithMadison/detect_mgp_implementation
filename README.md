@@ -1,8 +1,9 @@
+
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
 
 ## Overview
 
-This repository provides a modular framework for detecting and labeling Manufactured Gas Production (MGP) sites from digitized Sanborn fire insurance maps. It combines image processing techniques and data scraping utilities, including:
+This repository provides a modular framework for performing the semi-automatic labeling Manufactured Gas Production (MGP) sites present in digitized Sanborn fire insurance maps. It combines image processing techniques and data scraping utilities, including:
 
 - **Circle Detection:** Two complementary methods (Hough Transform and Contour Analysis) to detect circular shapes in images, useful for identifying specific map features.
 - **Library of Congress Resource Scraper:** Automates downloading digital resources, filtering by MIME type, and organizing them for processing.
@@ -10,22 +11,64 @@ This repository provides a modular framework for detecting and labeling Manufact
 
 The pipeline's modularity makes it adaptable for various workflows beyond MGP site detection.
 
-## Features
+## Usage
 
-### **Circle Detection**
-- **Hough Circle Detector**:
-  - Implements OpenCV's `HoughCircles` to detect circular shapes.
-  - Customizable detection parameters: resolution, edge thresholds, minimum/maximum radius, etc.
-  - Saves detected circles with optional margins for cropping.
-- **Contour Circle Detector**:
-  - Uses contour analysis to find circular objects.
-  - Filters by circularity and area thresholds.
-  - Supports batch processing of images in directories.
+`contour_circle_detector.py`: **Contour-Based Circle Detection Algorithm**
 
-### **Library of Congress Resource Scraper**
-- Scrapes and downloads resources from the **Library of Congress API**.
-- Filters files by specific MIME types (e.g., JPEG, TIFF, PDF).
-- Ensures organized storage with unique filenames and directory structure.
+This script detects circles in images using contours and evaluates their circularity. It crops and saves detected circles or marks images with no circles.
+
+##### Required Libraries
+
+-   `opencv-python`
+-   `numpy`
+-   `concurrent.futures`
+##### How to Use
+
+1.  Instantiate the  `ContourCircleDetector`  class with the desired configuration:
+    
+```python
+    detector = ContourCircleDetector(
+    min_radius=10,			# Minimum/maximum radius for detections
+    max_radius=50,			
+    min_circularity=0.85,	# Minimum/maximum circularity for classification as circle
+    max_circularity=1.20
+)
+```
+
+`hough_circle_detector.py`: **Hough-Transform-Based Circle Detection Algorithm**
+
+This script uses OpenCV's `HoughCircles` method to detect circles in images, crop them, and save them to output folders. This is an attempt at a literal implementation of the procedure described in the J. Tollefson et. al. paper.
+
+##### Required Libraries
+
+-   `opencv-python`
+-   `numpy`
+-   `concurrent.futures`
+##### How to Use
+
+1.  Instantiate the `HoughCircleDetector` class with the [required parameters](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d):
+    
+```python
+circle_params = {
+    "dp": 1.2,
+    "minDist": 20,
+    "param1": 50,
+    "param2": 30,
+    "minRadius": 10,
+    "maxRadius": 50
+}
+detector = HoughCircleDetector(circle_params)
+```
+    
+2.  Process a folder of images:
+    
+```python
+detector.process_images_in_folder(
+    input_folder=Path("/path/to/images"),
+    positive_folder=Path("/path/to/save/circles"),
+    negative_folder=Path("/path/to/save/negatives")
+)
+```
 
 ---
 
