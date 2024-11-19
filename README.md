@@ -32,7 +32,7 @@ The pipeline is designed to be modular, allowing flexibility in usage for divers
 ```
 project/
 │
-├── components/                                      # Core modules for circle detection and scraping
+├── components/                                     # Core modules for circle detection and scraping
 │   ├── hough_circle_detector.py                    # Implements Hough Transform for circle detection
 │   ├── contour_circle_detector.py                  # Uses contour analysis for circle detection
 │   ├── library_of_congress_resource_scraper.py     # Scraper for Library of Congress resources
