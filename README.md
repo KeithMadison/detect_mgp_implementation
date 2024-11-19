@@ -137,7 +137,7 @@ Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circ
 
 1.  **Configure Parameters (Optional):**
     
-    You can adjust the detection parameters directly in the script or via command-line arguments.
+    FILL IN HERE> SEE: https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d
     
 2.  **Run the Script:**
     
@@ -175,15 +175,9 @@ The  `main.py`  script orchestrates the entire pipeline, combining scraping and 
 
 **Usage:**
 
-1.  **Ensure All Configurations are Set:**
-    
-    Check that all components are correctly configured.
-    
-2.  **Run the Script:**
-    
-    ```bash
-    python main.py
-    ```
+```bash
+Needs command line args
+```
     
 
 ## Design Considerations
