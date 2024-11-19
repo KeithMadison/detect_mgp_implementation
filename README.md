@@ -34,7 +34,8 @@ bash
 
 Copy code
 
-`project/
+```
+project/
 ├── components/                           # Core modules for circle detection and scraping
 │   ├── contour_circle_detector.py        # Contour-based circle detection
 │   ├── hough_circle_detector.py          # Hough Transform circle detection
@@ -57,7 +58,8 @@ Copy code
 ├── main.py                               # Entry point for the MGP detection pipeline
 ├── README.md                             # Project documentation
 ├── requirements.txt                      # List of Python dependencies
-└── LICENSE                               # License information` 
+└── LICENSE                               # License information
+` 
 
 ## Requirements
 
@@ -78,30 +80,24 @@ Copy code
 ## Installation
 
 1.  **Clone the Repository:**
-    
-    bash
-    
-    Copy code
-    
-    `git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name` 
+
+	```bash
+	git clone https://github.com/yourusername/your-repo-name.git
+    cd your-repo-name
+	```
     
 2.  **Create a Virtual Environment (Optional but Recommended):**
     
-    bash
-    
-    Copy code
-    
-    `python3 -m venv venv
-    source venv/bin/activate` 
+	```bash
+	python3 -m venv venv
+    source venv/bin/activate
+	```
     
 3.  **Install Dependencies:**
     
-    bash
-    
-    Copy code
-    
-    `pip install -r requirements.txt` 
+	```bash
+	pip install -r requirements.txt
+	```
     
 
 ## Usage
