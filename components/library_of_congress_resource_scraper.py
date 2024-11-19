@@ -29,7 +29,7 @@ class LibraryOfCongressResourceScraper:
 		file_extension: Desired file extension for downloads (e.g., '.jpg').
 		output_directory (Path): Directory where downloaded files will be saved.
     
-	Example:
+	Example Usage:
 		scraper = LibraryOfCongressResourceScraper(
 		search_path="https://loc.gov/maps/?q=fire+insurance",
 		file_extension=".jpg",
