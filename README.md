@@ -59,7 +59,7 @@ project/
 ├── README.md                             # Project documentation
 ├── requirements.txt                      # List of Python dependencies
 └── LICENSE                               # License information
-` 
+```
 
 ## Requirements
 
