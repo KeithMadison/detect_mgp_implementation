@@ -1,4 +1,4 @@
-# Project Name: Circle Detection and Library of Congress Image Scraper
+# Manufactured Gas Production (MGS) Site Semi-Automatic Labeller
 
 ## Overview
 This repository contains tools for:
