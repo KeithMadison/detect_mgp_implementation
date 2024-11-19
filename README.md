@@ -1,12 +1,14 @@
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
 
 ## Overview
-This repository contains tools for:
-1. Detecting circular shapes in images using both **Hough Transform** and **Contour Analysis** methods.
-2. Downloading digital resources from the **Library of Congress** using a customizable scraping utility.
-3. A data pre-processing pipeline which combines the above to facilitate the semi-automatic labeling of manufactured gas production (MGP) sites present in digitized Sanborn fire insurance maps made available by the Library of Congress.
 
-The pipeline is designed to be modular, allowing flexibility in usage for diverse image processing and data collection workflows. Though I employ it here for use in the detection of MGP sites, its components are highly independent of the broader data pre-processing pipeline.
+This repository provides a modular framework for detecting and labeling Manufactured Gas Production (MGP) sites from digitized Sanborn fire insurance maps. It combines image processing techniques and data scraping utilities, including:
+
+- **Circle Detection:** Two complementary methods (Hough Transform and Contour Analysis) to detect circular shapes in images, useful for identifying specific map features.
+- **Library of Congress Resource Scraper:** Automates downloading digital resources, filtering by MIME type, and organizing them for processing.
+- **Pre-Processing Pipeline:** Integrates these tools for semi-automatic labeling, simplifying the identification of MGP sites from large datasets.
+
+The pipeline's modularity makes it adaptable for various workflows beyond MGP site detection.
 
 ## Features
 
