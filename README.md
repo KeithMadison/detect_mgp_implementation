@@ -310,15 +310,7 @@ I define the following accuracy, precision, and performance metrics in the stand
 | F1 Score    | 0.79     | 0.15     |
 
 ### Formulae:
- - \[
-\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{FP} + \text{TN} + \text{FN}}
-\]
- - \[
-\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
-\]
- - \[
-\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
-\]
- - \[
-\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
-\]
+ - $\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{FP} + \text{TN} + \text{FN}}$
+ - $\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$
+ - $\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$
+ - $\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$
