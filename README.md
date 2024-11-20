@@ -137,11 +137,11 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
 	```python
 	circle_params = {
 		'dp': 1.2,		# Inverse ratio of the accumulator resolution to the image resolution. Higher values mean lower resolution.
-		'minDist': 20,		# Minimum distance between the centers of detected circles.
+		'minDist': 20,		# Minimum distance between the centers of detected circles (pixels).
 		'param1': 300,		# Higher threshold for the Canny edge detector (lower threshold is half of this value).
 		'param2': 140,		# Accumulator threshold for the circle centers at the detection stage. Higher values detect fewer circles.
-		'minRadius': 15,	# Minimum circle radius to be detected.
-		'maxRadius': 130,	# Maximum circle radius to be detected.
+		'minRadius': 15,	# Minimum circle radius to be detected (pixels).
+		'maxRadius': 130,	# Maximum circle radius to be detected (pixels).
 	}
 	```
     
@@ -164,20 +164,37 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
 
 #### 2.2. Contour-Based Circle Detector
 
+The `ContourCircleDetector` class makes use of contours and circularity metrics to identify circular features in images. Circular features are cropped to a uniform size and saved in a specified output directory, as are images containing no circular features.
+
 **Usage:**
 
-1.  **Configure Parameters (Optional):**
+1.  **Configure Parameters (Required):**
+
+    The contour-based circle detector has comparatively few tunable parameters. The minimum and maximum circle radius to be detected must be set. The minimum and maximum circularities of a valid circle have default values of `0.85` and `1.20`, respectively, which works well in many cases. 
+
+    **Example:**
+
+	```python
+	min_radius = 15		# Minimum circle radius to be detected (pixels).
+ 	max_radius = 130	# Maximum circle radius to be detected (pixels).
+ 	min_circularity = 0.85	# Minimum circularity value for a valid circle.
+ 	max_circularity = 1.20	# Maximum circularity value for a valid circle.
+	```
     
-    Adjust parameters  `min_radius`,  `max_radius`,  `min_circularity`, and  `max_circularity`  as needed.
-    
-2.  **Run the Script:**
+3.  **Run the Script:**
     
     
-    ```bash
-    python components/contour_circle_detector.py \
-      --input_folder data/sanborn_images \
-      --positive_folder output/positive_samples/contour \
-      --negative_folder output/negative_samples/contour
+    ```python
+    input_folder = Path('./input/')			# Directory containing images.
+    positive_output_folder = Path('./positive/')	# Detected circular features, cropped from images.
+    negative_output_folder = Path('./negative/')	# Images containing circles
+    
+    contour_detector = ContourCircleDetector(min_radius, max_radius)
+    contour_detector.process_images_in_folder(
+                         input_folder,
+                         positive_output_folder,
+                         negative_output_folder
+    )
     ``` 
     
 
