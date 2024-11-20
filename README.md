@@ -281,6 +281,8 @@ I ran both the Contour and Hough algorithms on a subset of the Sanborn dataset c
 - **Circular Feature:** I define a circular feature as any structure or demarcation in an image that is qualitatively precisely circular. This excludes items like pencil-drawn circles highlighting numbers, as well as characters such as "0" or "O." MGP sites are a subset of these circular features.
 - **True Positive/Negative:** A true positive is a **cropped image** of a circular feature. A true negative is **a map** that was returned containing no identifiable circular features.
 - **False Positive/Negative:** A false positive, accordingly, is a cropped image containing no identifiable circular feature. A false negative is a map which was returned and which contains at least one identifiable circular feature.
+  
+![Examples of true and false positives.](/assets/true_and_false_positive_examples.png)
 
 Notice that these definitions differ from those used in the J. Tollefson et al. paper. The reasons are twofold: firstly, this pre-processing step is not intended to identify MGP sites; secondly, I was unable to identify a reasonably sized subset of the Sanborn dataset containing a sufficient number of identifiable MGP sites for meaningful evaluation.
 
