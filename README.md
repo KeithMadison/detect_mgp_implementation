@@ -134,7 +134,7 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
 
     **Example:**
 
-```
+	```python
 	circle_params = {
 		'dp': 1.2,
 		'minDist': 20,
@@ -143,7 +143,7 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
 		'minRadius': 15,
 		'maxRadius': 130,
 	}
-```
+	```
     
 3.  **Run the Script:**
     
