@@ -101,7 +101,7 @@ project/
 
 #### Description
 
-The  `library_of_congress_scraper.py`  script downloads resources from the Library of Congress digital collections, filtering by file extension.
+The `library_of_congress_scraper.py` script automates the downloading of resources from the Library of Congress digital collections, allowing users to filter files by extension and save them locally for research or archival purposes.
 
 #### How to Use
 
@@ -128,7 +128,7 @@ The  `library_of_congress_scraper.py`  script downloads resources from the Libra
 
 #### Description
 
-Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circular features in images, indicative of potential MGP sites.
+Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circular features in images. Circular features are cropped to a uniform size and saved in a specified output directory, as are images containing no circular features.
 
 #### 2.1. Hough Transform Circle Detector
 
@@ -170,7 +170,7 @@ Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circ
 
 ### 3. Main Pipeline Script
 
-The  `main.py`  script orchestrates the entire pipeline, combining scraping and circle detection.
+The  `main.py`  script orchestrates the pre-processing pipeline, combining scraping and circle detection to perform the semi-automatic labeling of MGS sites.
 
 **Usage:**
 
