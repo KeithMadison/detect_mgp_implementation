@@ -71,6 +71,7 @@ project/
 -   `concurrent.futures`  (Standard Library)
 -   `pathlib`  (Standard Library)
 -   `uuid`  (Standard Library)
+-   `argparse` (Standard Library)
 
 ## Installation
 
