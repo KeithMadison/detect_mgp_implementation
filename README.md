@@ -149,8 +149,8 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
     
     
     ```python
-    input_folder = Path('./input/')			# Directory containing images
-    positive_output_folder = Path('./positive/')	# Circular features
+    input_folder = Path('./input/')			# Directory containing images.
+    positive_output_folder = Path('./positive/')	# Detected circular features, cropped from images.
     negative_output_folder = Path('./negative/')	# Images containing circles
     
     hough_detector = HoughCircleDetector(circle_params)
