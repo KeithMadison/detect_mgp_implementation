@@ -3,7 +3,7 @@
 
 ## Overview
 
-This repository provides a modular framework for the semi-automatic labeling of  **Manufactured Gas Production (MGP)**  sites in digitized Sanborn fire insurance maps.
+This repository provides a modular framework for the semi-automatic labeling of  **Manufactured Gas Production (MGP)**  sites present in digitized Sanborn fire insurance maps. These scripts are an attempt to both recreate and improve upon the pre-processing pipeline described in the research article *Feature Extraction and Machine Learning Techniques for Identifying Historic Urban Environmental Hazards: New Methods to Locate Lost Fossil Fuel Infrastructure in US Cities* by Tollefson, Frickel, and Restrepo.
 
 **Key Features:**
 
