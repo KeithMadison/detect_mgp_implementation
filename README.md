@@ -103,25 +103,17 @@ project/
 
 The `library_of_congress_scraper.py` script automates the downloading of resources from the Library of Congress digital collections, allowing users to filter files by extension and save them locally for research or archival purposes.
 
-#### How to Use
+#### Example Usage
 
-1.  **Configure the Scraper:**
+```
+         search_url = 'https://www.loc.gov/collections/sanborn-maps/?dates=1899/1899&fa=location:springfield'
+         file_extension = '.jpg'
+         save_to = './output_directory/'
+ 
+         loc_scraper = LibraryOfCongressResourceScraper(search_url, file_extension, save_to)
+```
     
-    Open  `library_of_congress_scraper.py`  and set the following variables:
-
-    ```python
-    SEARCH_URL = "https://www.loc.gov/maps/?q=fire+insurance&fo=json"
-    FILE_EXTENSION = ".jpg"
-    OUTPUT_DIRECTORY = Path("data/sanborn_images")
-    ```
-    
-2.  **Run the Script:**
-    
-    ```python
-    python components/library_of_congress_scraper.py
-    ```
-    
-    **Note:**  Ensure that the  `SEARCH_URL`  is a valid API endpoint returning JSON data.
+    **Note:**  Ensure that the  `search_url`  is a valid Library of Congress API endpoint returning JSON data.
     
 
 ### 2. Circle Detection Algorithms
