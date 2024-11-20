@@ -13,7 +13,7 @@ This repository provides a modular framework for the semi-automatic labeling of 
 -   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources made available online by the Library of Congress, filtering by file type, and organizing them for research or archival purposes.
 -   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling MGS site labeling.
 
-The modularity of the pipeline makes it adaptable for various workflows beyond MGP site detection.
+The modularity of the pipeline makes it adaptable for various image processing and data scraping workflows beyond the scope of MGP site detection.
 
 ## Table of Contents
 
