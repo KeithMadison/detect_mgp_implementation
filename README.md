@@ -124,20 +124,41 @@ Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circ
 
 #### 2.1. Hough Transform Circle Detector
 
+The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automated detection of circular features in images contained in some specified directory. This is an attempt at a literal implementation of the detector described in the J. Tollefson et.al. paper.
+
 **Usage:**
 
-1.  **Configure Parameters (Optional):**
+1.  **Configure Parameters (Required):**
     
-    FILL IN HERE> SEE: https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d
+    OpenCV's HoughCircles requires the setting of a variety of detection parameters. You can read more about them in [the OpenCV documentation](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d).
+
+    **Example:**
+
+```
+	circle_params = {
+		'dp': 1.2,
+		'minDist': 20,
+		'param1': 300,
+		'param2': 140,
+		'minRadius': 15,
+		'maxRadius': 130,
+	}
+```
     
-2.  **Run the Script:**
+3.  **Run the Script:**
     
     
-    ```bash
-    python components/hough_circle_detector.py \
-      --input_folder data/sanborn_images \
-      --positive_folder output/positive_samples/hough \
-      --negative_folder output/negative_samples/hough
+    ```python
+    input_folder = Path('./input/')			# Directory containing images
+    positive_output_folder = Path('./positive/')	# Circular features
+    negative_output_folder = Path('./negative/')	# Images containing circles
+    
+    hough_detector = HoughCircleDetector(circle_params)
+    hough_detector.process_images_in_folder(
+                         input_folder,
+                         positive_output_folder,
+                         negative_output_folder
+    )
     ```
     
 
