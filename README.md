@@ -105,7 +105,7 @@ The `library_of_congress_scraper.py` script automates the downloading of resourc
 
 #### Example Usage
 
-	```
+	```python
          search_url = 'https://www.loc.gov/collections/sanborn-maps/?dates=1899/1899&fa=location:springfield'
          file_extension = '.jpg'
          save_to = './output_directory/'
