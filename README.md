@@ -64,11 +64,15 @@ project/
 
 -   `opencv-python`
 -   `requests`
+-   `numpy`
 -   `logging` (Standard Library)
 -   `concurrent.futures`  (Standard Library)
 -   `pathlib`  (Standard Library)
 -   `uuid`  (Standard Library)
 -   `argparse` (Standard Library)
+-   `typing` (Standard Library)
+-   `time` (Standard Library)
+-   `mimetypes` (Standard Library)
 
 ## Installation
 
