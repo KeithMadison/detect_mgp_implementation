@@ -302,7 +302,7 @@ The Hough method struggled with a significantly higher number of false positives
 
 ### Performance (Accuracy & Precision)
 
-I define the following accuracy, precision, and performance metrics in the standard ways (see below for explicit formulae).
+I define the following accuracy, precision, and performance metrics in the standard ways (see below for explicit formulae). Contour demonstrates superior performance across all metrics compared to Hough, achieving significantly higher accuracy (92% vs. 57%), which indicates its reliability for overall classification. With a precision of 71%, Contour effectively minimizes false positives, while Hough struggles at just 13%. In terms of recall, Contour excels at 89%, identifying the majority of true positives, whereas Hough’s recall of 16% highlights its poor sensitivity to positive cases. Combining these metrics, Contour achieves a robust F1 score of 0.79, showcasing its balanced performance, while Hough’s F1 score of 0.15 reflects significant challenges in maintaining this balance. Making any conclusions about their respective performance, however, would require further tuning of parameters, and perhaps sensitivity analyses for various parameters:
 
 | Metric      | Contour  | Hough    |
 |-------------|----------|----------|
@@ -310,8 +310,6 @@ I define the following accuracy, precision, and performance metrics in the stand
 | Precision   | 0.71     | 0.13     |
 | Recall      | 0.89     | 0.16     |
 | F1 Score    | 0.79     | 0.15     |
-
-Contour demonstrates superior performance across all metrics compared to Hough, achieving significantly higher accuracy (92% vs. 57%), which indicates its reliability for overall classification. With a precision of 71%, Contour effectively minimizes false positives, while Hough struggles at just 13%. In terms of recall, Contour excels at 89%, identifying the majority of true positives, whereas Hough’s recall of 16% highlights its poor sensitivity to positive cases. Combining these metrics, Contour achieves a robust F1 score of 0.79, showcasing its balanced performance, while Hough’s F1 score of 0.15 reflects significant challenges in maintaining this balance. Making any conclusions about their respective performance, however, would require further tuning of parameters, and perhaps sensitivity analyses for various parameters.
 
 ### Formulae:
  - $\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{FP} + \text{TN} + \text{FN}}$
