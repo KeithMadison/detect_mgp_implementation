@@ -276,7 +276,7 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 
 ## Results
 
-I ran both the Contour and Hough algorithms on a subset of the Sanborn dataset consisting of 786 maps from the time period 1800 - 1899 and from the city of Springfield. I then visually inspected the output, and counted the number of true positives, true negatives, false positives, and false negatives. I define each term as follows:
+I ran both the Contour and Hough algorithms on a subset of the Sanborn dataset consisting of 786 maps from the time period 1800 - 1899 and from the city of Springfield (chosen for no particular reason). I then visually inspected the output, and counted the number of true positives, true negatives, false positives, and false negatives. I define each term as follows:
 
 - **Circular Feature:** I define a circular feature as any structure or demarcation in an image that is qualitatively precisely circular. This excludes items like pencil-drawn circles highlighting numbers, as well as characters such as "0" or "O." MGP sites are a subset of these circular features.
 - **True Positive/Negative:** A true positive is a **cropped image** of a circular feature. A true negative is **a map** that was returned containing no identifiable circular features.
