@@ -136,12 +136,12 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
 
 	```python
 	circle_params = {
-		'dp': 1.2,
-		'minDist': 20,
-		'param1': 300,
-		'param2': 140,
-		'minRadius': 15,
-		'maxRadius': 130,
+		'dp': 1.2,		# Inverse ratio of the accumulator resolution to the image resolution. Higher values mean lower resolution.
+		'minDist': 20,		# Minimum distance between the centers of detected circles.
+		'param1': 300,		# Higher threshold for the Canny edge detector (lower threshold is half of this value).
+		'param2': 140,		# Accumulator threshold for the circle centers at the detection stage. Higher values detect fewer circles.
+		'minRadius': 15,	# Minimum circle radius to be detected.
+		'maxRadius': 130,	# Maximum circle radius to be detected.
 	}
 	```
     
