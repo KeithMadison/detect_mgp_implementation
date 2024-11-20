@@ -205,7 +205,7 @@ The  `main.py`  script orchestrates the pre-processing pipeline, combining scrap
 **Usage:**
 
 ```bash
-Needs command line args
+python script.py --dates "1900/1901" --location "new-york" --sanborn_images "./sanborn_images_folder" --output "./preprocessing_output_folder"
 ```
     
 
