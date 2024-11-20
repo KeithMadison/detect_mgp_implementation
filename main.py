@@ -1,6 +1,6 @@
 from components.hough_circle_detector import HoughCircleDetector
 from components.contour_circle_detector import ContourCircleDetector
-from components.library_of_congress_scraper import LibraryOfCongressResourceScraper
+from components.library_of_congress_resource_scraper import LibraryOfCongressResourceScraper
 from pathlib import Path
 import argparse
 import logging
