@@ -8,7 +8,7 @@ This repository provides a modular framework for the semi-automatic labeling of 
 **Key Features:**
 
 -   **Circle Detection Algorithms:**
-    -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images.
+    -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images (this is the technique used in the J. Tollefson et.al. paper).
     -   **Contour Analysis Method:**  Employs contour analysis to identify circles based on shape characteristics.
 -   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources, filtering by file type, and organizing them for processing.
 -   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling.
