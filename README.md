@@ -62,9 +62,9 @@ project/
 
 ### Python Dependencies
 
--   `opencv-python`
+-   `opencv-python>=4.5.5`
 -   `requests`
--   `numpy`
+-   `numpy>=1.12`
 -   `logging` (Standard Library)
 -   `concurrent.futures`  (Standard Library)
 -   `pathlib`  (Standard Library)
