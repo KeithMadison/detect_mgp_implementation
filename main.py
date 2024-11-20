@@ -2,6 +2,7 @@ from components.hough_circle_detector import HoughCircleDetector
 from components.contour_circle_detector import ContourCircleDetector
 from components.library_of_congress_scraper import LibraryOfCongressResourceScraper
 from pathlib import Path
+import argparse
 import logging
 
 logging.basicConfig(
@@ -10,10 +11,28 @@ logging.basicConfig(
 	datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-def download_data() -> None:
-	search_url = 'https://www.loc.gov/collections/sanborn-maps/?dates=1899/1899&fa=location:springfield'
+def parse_arguments():
+	parser = argparse.ArgumentParser(description="Sanborn Maps Processing Script")
+	parser.add_argument(
+		"--dates", type=str, default="1899/1899", 
+		help="Date range for the search (e.g., '1899/1899')"
+	)
+	parser.add_argument(
+		"--location", type=str, default="springfield", 
+		help="Location for the search (e.g., 'springfield')"
+	)
+	parser.add_argument(
+		"--sanborn_images", type=str, default="./sanborn_images/",
+		help="Directory to save Sanborn images"
+	)
+	parser.add_argument(
+		"--output", type=str, default="./output/",
+		help="Base directory for output files"
+	)
+	return parser.parse_args()
+
+def download_data(search_url, save_to) -> None:
 	file_extension = '.jpg'
-	save_to = './sanborn_images/'
 
 	logging.info("Starting data download...")
 
@@ -22,7 +41,7 @@ def download_data() -> None:
 
 	logging.info("Data download completed.")
 
-def prepare_output_directories(base_output='./output/'):
+def prepare_output_directories(base_output):
 	output_dirs = {
 		'hough_positive': Path(base_output, 'positive_samples', 'hough'),
 		'hough_negative': Path(base_output, 'negative_samples', 'hough'),
@@ -35,10 +54,16 @@ def prepare_output_directories(base_output='./output/'):
 	return output_dirs
 
 def main():
-	try:
-		download_data()
+	args = parse_arguments()
 
-		output_dirs = prepare_output_directories()
+	search_url = (
+		f"https://www.loc.gov/collections/sanborn-maps/?dates={args.dates}&fa=location:{args.location}"
+	)
+
+	try:
+		download_data(search_url, args.sanborn_images)
+
+		output_dirs = prepare_output_directories(args.output)
 
 		# Parameters for the Hough circle detector, determined to provide
 		# satisfactory results via trial and error
@@ -54,7 +79,7 @@ def main():
 		hough_detector = HoughCircleDetector(circle_params)
 		contour_detector = ContourCircleDetector(min_radius=15, max_radius=130)
 
-		input_folder = Path('./sanborn_images/')
+		input_folder = Path(args.sanborn_images)
 		logging.info("Starting Hough Circle Detection.")
 
 		hough_detector.process_images_in_folder(
@@ -77,5 +102,5 @@ def main():
 		logging.error(f"An error occurred: {e}")
 		raise
 
-if __name__=="__main__":
+if __name__ == "__main__":
 	main()
