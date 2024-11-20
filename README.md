@@ -285,6 +285,7 @@ I ran both the Contour and Hough algorithms on a subset of the Sanborn dataset c
 The performance of the Contour and Hough methods were evaluated using standard classification metrics derived from their respective confusion matrices. These results highlight the differences in accuracy, precision, recall, and overall effectiveness between the two approaches. It should be noted that I am somewhat unfamiliar with the Hough algorithm, and it is quite possible that an improved parameter configuration should yield more promising results.
 
 ### Contour
+The Contour method demonstrated a strong performance, with a higher proportion of correct classifications. The confusion matrix for this method is as follows:
 
 |                | **True** | **False** |
 |----------------|----------|-----------|
@@ -292,13 +293,14 @@ The performance of the Contour and Hough methods were evaluated using standard c
 | **Negative**   | 594      | 14        |
 
 ### Hough
+The Hough method struggled with a significantly higher number of false positives and false negatives. Its confusion matrix is shown below:
 
 |                | **True** | **False** |
 |----------------|----------|-----------|
 | **Positive**   | 33       | 212       |
 | **Negative**   | 472      | 174       |
 
-### Accuracy, Precision & Performance
+### Performance (Accuracy & Precision)
 
 I define the following accuracy, precision, and performance metrics in the standard ways (see below for explicit formulae).
 
@@ -308,6 +310,8 @@ I define the following accuracy, precision, and performance metrics in the stand
 | Precision   | 0.71     | 0.13     |
 | Recall      | 0.89     | 0.16     |
 | F1 Score    | 0.79     | 0.15     |
+
+Contour demonstrates superior performance across all metrics compared to Hough, achieving significantly higher accuracy (92% vs. 57%), which indicates its reliability for overall classification. With a precision of 71%, Contour effectively minimizes false positives, while Hough struggles at just 13%. In terms of recall, Contour excels at 89%, identifying the majority of true positives, whereas Hough’s recall of 16% highlights its poor sensitivity to positive cases. Combining these metrics, Contour achieves a robust F1 score of 0.79, showcasing its balanced performance, while Hough’s F1 score of 0.15 reflects significant challenges in maintaining this balance. Making any conclusions about their respective performance, however, would require further tuning of parameters, and perhaps sensitivity analyses for various parameters.
 
 ### Formulae:
  - $\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{FP} + \text{TN} + \text{FN}}$
