@@ -198,8 +198,6 @@ The design of this pipeline emphasizes clarity, modularity, and robustness. By a
 
 ###  1. **Documentation**
 
- 
-
 Good code is well-documented. Documentation comprises both an explicit accounting in the form of formal, external documentation (e.g., user guides and, in this case, README files) and inline comments that clarify intent, logic, and complex sections of the code for future maintainers. Well-documented is not synonymous with extensively documented, however, and oftentimes good code explains itself without the need for excessive comments or external documentation. I strived for this by adhering to the following:
 
   
