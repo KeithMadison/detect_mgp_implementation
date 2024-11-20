@@ -77,8 +77,8 @@ project/
 1.  **Clone the Repository:**
 
 	```bash
-	git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name
+	git clone https://github.com/yourusername/the-bccv-repo-name.git
+    cd the-bccv-repo-name
 	```
     
 2.  **Create a Virtual Environment (Optional but Recommended):**
