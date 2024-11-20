@@ -8,7 +8,7 @@ This repository provides a modular framework for the semi-automatic labeling of 
 **Key Features:**
 
 -   **Circle Detection Algorithms:**
-    -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images (this is the technique used in the J. Tollefson et.al. paper).
+    -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images (this is the technique used in the J. Tollefson et al. paper).
     -   **Contour Analysis Method:**  Employs contour analysis to identify circles based on shape characteristics.
 -   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources made available online by the Library of Congress, filtering by file type, and organizing them for research or archival purposes.
 -   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling MGP site labeling.
@@ -127,7 +127,7 @@ Both  `hough_circle_detector.py`  and  `contour_circle_detector.py`  detect circ
 
 #### 2.1. Hough Transform Circle Detector
 
-The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automated detection of circular features in images contained in some specified directory. This is an attempt at a literal implementation of the detector described in the J. Tollefson et.al. paper.
+The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automated detection of circular features in images contained in some specified directory. This is an attempt at a literal implementation of the detector described in the J. Tollefson et al. paper.
 
 **Usage:**
 
@@ -281,6 +281,8 @@ I ran both the Contour and Hough algorithms on a subset of the Sanborn dataset c
 - **Circular Feature:** I define a circular feature as any structure or demarcation in an image that is qualitatively precisely circular. This excludes items like pencil-drawn circles highlighting numbers, as well as characters such as "0" or "O." MGP sites are a subset of these circular features.
 - **True Positive/Negative:** A true positive is a **cropped image** of a circular feature. A true negative is **a map** that was returned containing no identifiable circular features.
 - **False Positive/Negative:** A false positive, accordingly, is a cropped image containing no identifiable circular feature. A false negative is a map which was returned and which contains at least one identifiable circular feature.
+
+Notice that these definitions differ from those used in the J. Tollefson et al. paper. The reasons are twofold: firstly, this pre-processing step is not intended to identify MGP sites; secondly, I was unable to identify a reasonably sized subset of the Sanborn dataset containing a sufficient number of identifiable MGP sites for meaningful evaluation.
 
 The performance of the Contour and Hough methods were evaluated using standard classification metrics derived from their respective confusion matrices. These results highlight the differences in accuracy, precision, recall, and overall effectiveness between the two approaches. It should be noted that I am somewhat unfamiliar with the Hough algorithm, and it is quite possible that an improved parameter configuration should yield more promising results.
 
