@@ -216,24 +216,24 @@ Good code is well-documented. Documentation comprises both an explicit accountin
 
   
 
-	```python
-		@staticmethod
-		def _create_unique_filename(file_url: str, file_extension: str, save_path: Path) -> Path:
-			parsed_url = urlparse(file_url)
-			filename = Path(parsed_url.path).name
-        
-			# Fallback to a default name if the URL path does not have a file name
-			if not filename:
-				filename = f"file_{uuid.uuid4().hex}{file_extension}"
-        	
-			file_path = save_path / filename
-        
-			if file_path.exists():
-				unique_suffix = uuid.uuid4().hex
-				file_path = file_path.with_stem(f"{file_path.stem}_{unique_suffix}")
+```python
+@staticmethod
+def _create_unique_filename(file_url: str, file_extension: str, save_path: Path) -> Path:
+    parsed_url = urlparse(file_url)
+    filename = Path(parsed_url.path).name
 
-			return file_path
-	```
+    # Fallback to a default name if the URL path does not have a file name
+    if not filename:
+        filename = f"file_{uuid.uuid4().hex}{file_extension}"
+    
+    file_path = save_path / filename
+
+    if file_path.exists():
+        unique_suffix = uuid.uuid4().hex
+        file_path = file_path.with_stem(f"{file_path.stem}_{unique_suffix}")
+
+    return file_path
+```
 
 ### 2. Modularity & Reusability
 
