@@ -101,7 +101,7 @@ project/
 
 #### Description
 
-The `library_of_congress_scraper.py` script automates the downloading of resources from the Library of Congress digital collections, allowing users to filter files by extension and save them locally for research or archival purposes. Usage is relatively straightforward.
+The `library_of_congress_scraper.py` script automates the downloading of resources from the Library of Congress digital collections, allowing users to filter files by extension and save them locally for research or archival purposes. Usage is quite straightforward.
 
 #### Example Usage
 
