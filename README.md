@@ -11,7 +11,7 @@ This repository provides a modular framework for the semi-automatic labeling of 
     -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images (this is the technique used in the J. Tollefson et.al. paper).
     -   **Contour Analysis Method:**  Employs contour analysis to identify circles based on shape characteristics.
 -   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources made available online by the Library of Congress, filtering by file type, and organizing them for research or archival purposes.
--   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling MGS site labeling.
+-   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling MGP site labeling.
 
 The modularity of the pipeline makes it adaptable for various image processing and data scraping workflows beyond the scope of MGP site detection.
 
@@ -63,11 +63,8 @@ project/
 ### Python Dependencies
 
 -   `opencv-python`
--   `numpy`
 -   `requests`
--   `tenacity`
--   `argparse`
--   `logging`
+-   `logging` (Standard Library)
 -   `concurrent.futures`  (Standard Library)
 -   `pathlib`  (Standard Library)
 -   `uuid`  (Standard Library)
@@ -146,7 +143,7 @@ The `HoughCircleDetector` class makes use of OpenCV's HoughCircles in the automa
 	}
 	```
     
-3.  **Run the Script:**
+2.  **Run the Detector:**
     
     
     ```python
@@ -182,7 +179,7 @@ The `ContourCircleDetector` class makes use of contours and circularity metrics 
  	max_circularity = 1.20	# Maximum circularity value for a valid circle.
 	```
     
-3.  **Run the Script:**
+2.  **Run the Detector:**
     
     
     ```python
@@ -201,7 +198,7 @@ The `ContourCircleDetector` class makes use of contours and circularity metrics 
 
 ### 3. Main Pipeline Script
 
-The  `main.py`  script orchestrates the pre-processing pipeline, combining scraping and circle detection to perform the semi-automatic labeling of MGS sites.
+The  `main.py`  script orchestrates the pre-processing pipeline, combining scraping and circle detection to perform the semi-automatic labeling of MGP sites.
 
 **Usage:**
 
@@ -216,7 +213,7 @@ The design of this pipeline emphasizes clarity, modularity, and robustness. By a
 
 ###  1. **Documentation**
 
-Good code is well-documented. Documentation comprises both an explicit accounting in the form of formal, external documentation (e.g., user guides and, in this case, README files) and inline comments that clarify intent, logic, and complex sections of the code for future maintainers. Well-documented is not synonymous with extensively documented, however, and oftentimes good code explains itself without the need for excessive comments or external documentation. I strived for this by adhering to the following:
+Good code is well-documented. Documentation comprises both an explicit accounting in the form of formal, external documentation (e.g., user guides and, in this case, README files) and inline comments that clarify intent, logic, and complex sections of the code for future maintainers. Well-documented is not synonymous with extensively documented, however, and oftentimes good code explains itself without the need for excessive comments or external documentation. I strove for this by adhering to the following:
 
   
 1. **Explicit Types and Return Types:**
