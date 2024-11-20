@@ -1,6 +1,3 @@
 opencv-python
 numpy
 requests
-tenacity
-argparse
-logging
