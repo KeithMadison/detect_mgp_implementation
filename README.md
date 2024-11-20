@@ -290,50 +290,11 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 | **Positive**   | 33       | 212       |
 | **Negative**   | 472      | 174       |
 
+### Accuracy, Precision & Performance
 
-<div style="display: flex; gap: 20px;">
-
-<div>
-<h3>Contour</h3>
-<table>
-    <tr>
-        <th></th>
-        <th>True</th>
-        <th>False</th>
-    </tr>
-    <tr>
-        <td>Positive</td>
-        <td>116</td>
-        <td>48</td>
-    </tr>
-    <tr>
-        <td>Negative</td>
-        <td>594</td>
-        <td>14</td>
-    </tr>
-</table>
-</div>
-
-<div>
-<h3>Hough</h3>
-<table>
-    <tr>
-        <th></th>
-        <th>True</th>
-        <th>False</th>
-    </tr>
-    <tr>
-        <td>Positive</td>
-        <td>33</td>
-        <td>212</td>
-    </tr>
-    <tr>
-        <td>Negative</td>
-        <td>472</td>
-        <td>174</td>
-    </tr>
-</table>
-</div>
-
-</div>
-
+| Metric      | Contour  | Hough    |
+|-------------|----------|----------|
+| Accuracy    | 0.92     | 0.57     |
+| Precision   | 0.71     | 0.13     |
+| Recall      | 0.89     | 0.16     |
+| F1 Score    | 0.79     | 0.15     |
