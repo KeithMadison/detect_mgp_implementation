@@ -27,6 +27,7 @@ The modularity of the pipeline makes it adaptable for various image processing a
         -   [2.2. Contour-Based Circle Detector](#22-contour-based-circle-detector)
     -   [3. Main Pipeline Script](#3-main-pipeline-script)
 -   [Design Considerations](#design-considerations)
+-   [Results](#results)
 
 ## Directory Structure
 
@@ -270,3 +271,22 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 	- Scenarios where files already exist in the output directory, handled by appending unique suffixes to filenames.
 	- Nested data structures returned by the Library of Congress API, flattened using recursive logic for consistent processing.
 3. **Testing and Validation:** While formal unit tests are not yet included (due to time constraints), all code was written with the intent to facilitate ease of testing. Functions and classes are modular and self-contained, with clear input and output parameters, making them straightforward to test independently. Explicit type annotations further aid in isolating components for testing. By minimizing side effects and external dependencies, the codebase allows for mocking and stubbing techniques in future unit tests. Additionally, many methods (e.g, `_flatten_file`) are deterministic and could be easily validated using simple doctests or lightweight testing frameworks.
+
+---
+
+## Results
+
+### Contour
+
+|                | **True** | **False** |
+|----------------|----------|-----------|
+| **Positive**   | 116      | 48        |
+| **Negative**   | 594      | 14        |
+
+### Hough
+
+|                | **True** | **False** |
+|----------------|----------|-----------|
+| **Positive**   | 33       | 212       |
+| **Negative**   | 472      | 174       |
+
