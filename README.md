@@ -10,8 +10,8 @@ This repository provides a modular framework for the semi-automatic labeling of 
 -   **Circle Detection Algorithms:**
     -   **Hough Transform Method:**  Utilizes the Hough Transform to detect circular shapes in images (this is the technique used in the J. Tollefson et.al. paper).
     -   **Contour Analysis Method:**  Employs contour analysis to identify circles based on shape characteristics.
--   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources, filtering by file type, and organizing them for processing.
--   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling.
+-   **Library of Congress Resource Scraper:**  Automates the downloading of digital resources made available online by the Library of Congress, filtering by file type, and organizing them for research or archival purposes.
+-   **Pre-Processing Pipeline:**  Integrates all tools into a cohesive pipeline for semi-automatic labeling MGS site labeling.
 
 The modularity of the pipeline makes it adaptable for various workflows beyond MGP site detection.
 
