@@ -3,7 +3,7 @@
 
 ## Overview
 
-This repository provides a modular framework for semi-automatic labeling of  **Manufactured Gas Production (MGP)**  sites in digitized Sanborn fire insurance maps.
+This repository provides a modular framework for the semi-automatic labeling of  **Manufactured Gas Production (MGP)**  sites in digitized Sanborn fire insurance maps.
 
 **Key Features:**
 
