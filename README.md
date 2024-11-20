@@ -210,7 +210,7 @@ Good code is well-documented. Documentation comprises both an explicit accountin
 3. **Explicit Error and Logging Messages:**
   Employing structured logging and writing detailed error messages that explain what went wrong, where, and (where possible) why.
 
-  Take, for example, the following function. Despite having minimal documentation, it is immediately clear what this function accomplishes and how. The expressive function name, along with explicit argument and return types, obviates the need for a verbose docstring. Intuitive variable names (e.g., unique_suffix) further enhance clarity. Making use of such libraries as `pathlib` ensures that the code is expressive and clearly conveys intent:
+  Take, for example, the following function. Despite having minimal documentation, it is immediately clear what this function accomplishes and how. The expressive function name, along with explicit argument and return types, obviates the need for a verbose docstring. Intuitive variable names (e.g., `unique_suffix`) further enhance clarity. Making use of such libraries as `pathlib` ensures that the code is expressive and clearly conveys intent:
 
   
 
