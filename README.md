@@ -276,6 +276,14 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 
 ## Results
 
+I ran both the Contour and Hough algorithms on a subset of the Sanborn dataset consisting of 786 maps from the time period 1800 - 1899 and from the city of Springfield. I then visually inspected the output, and counted the number of true positives, true negatives, false positives, and false negatives. I define each term as follows:
+
+- **Circular Feature:** I define a circular feature as any structure or demarcation in an image that is qualitatively precisely circular. This excludes items like pencil-drawn circles highlighting numbers, as well as characters such as "0" or "O." MGP sites are a subset of these circular features.
+- **True Positive/Negative:** A true positive is a **cropped image** of a circular feature. A true negative is **a map** that was returned containing no identifiable circular features.
+- **False Positive/Negative:** A false positive, accordingly, is a cropped image containing no identifiable circular feature. A false negative is a map which was returned and which contains at least one identifiable circular feature.
+
+The performance of the Contour and Hough methods were evaluated using standard classification metrics derived from their respective confusion matrices. These results highlight the differences in accuracy, precision, recall, and overall effectiveness between the two approaches. It should be noted that I am somewhat unfamiliar with the Hough algorithm, and it is quite possible that an improved parameter configuration should yield more promising results.
+
 ### Contour
 
 |                | **True** | **False** |
@@ -292,9 +300,25 @@ Good code is (more often than not) highly modular. Modular code is not only easi
 
 ### Accuracy, Precision & Performance
 
+I define the following accuracy, precision, and performance metrics in the standard ways (see below for explicit formulae).
+
 | Metric      | Contour  | Hough    |
 |-------------|----------|----------|
 | Accuracy    | 0.92     | 0.57     |
 | Precision   | 0.71     | 0.13     |
 | Recall      | 0.89     | 0.16     |
 | F1 Score    | 0.79     | 0.15     |
+
+### Formulae:
+ - \[
+\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{FP} + \text{TN} + \text{FN}}
+\]
+ - \[
+\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
+\]
+ - \[
+\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\]
+ - \[
+\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\]
