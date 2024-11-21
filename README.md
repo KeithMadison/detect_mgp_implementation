@@ -56,27 +56,27 @@ While reading this paper, several potential improvements and alternative approac
     > "Results may be further improved by implementing optical character recognition (OCR) alongside a machine learning approach to MGP identification: Additional OCR analysis might provide a method to further filter CNN outputs or locate MGP-related map labels that fall outside of circular map regions."
 
 2. **Enhanced Preprocessing:**
-    - **Multi-scale Analysis:** Detecting circular structures at varying scales and orientations could mitigate issues arising from varying map resolutions or inconsistently drawn features.
-    - **Alternative Circle Detection Methods:** Using alternative algorithms could improve efficiency and accuracy of labeling in preprocessing.
+    - **Multi-scale Analysis:** Detecting circular structures at varying scales and orientations could mitigate issues arising from varying map resolutions or inconsistently drawn features. This could help reduce false negatives and improve recall.
+    - **Alternative Circle Detection Methods:** Making use of alternative circle detection algorithms could improve the efficiency and accuracy of labeling in pre-processing. I found, for instance (as you will soon see), that contour-based circular feature identification methods may outperform the Hough transform-based method employed in this paper.
 
 3. **Data Augmentation and Synthetic Data:**
-    - Augmenting the existing dataset and producing synthetic data could improve the detection of circular structures of varying sizes and orientations.
-
+    - I suspect that it would be relatively straightforward to both augment the existing dataset (perhaps improving the detection of circular structures of varying sizes and orientations) and to produce synthetic data from it, providing an expanded training dataset.
+  
 4. **Domain-Specific Data Integration:**
     - **Spatial Context Integration:** Incorporating spatial relationships between detected features into the classification process could enhance accuracy by aligning predictions with historical urban layouts.
 
 ### “Less Obvious” Potential Improvements
 1. **Using Transformer-Based Models:**
-    - Transformer architectures (e.g., Vision Transformers) could capture both local and global patterns in map images, enhancing differentiation between visually similar but contextually distinct features.
+    - Transformer architectures (such as Vision Transformers) could be used to capture both local and global patterns in the map images. Unlike CNNs (which excel at local feature extraction) ViTs process entire images as sequences of patches, enabling them to model relationships between features across the entire map. This could enhance the model's ability to differentiate between visually similar but contextually distinct features.
 
 2. **Hybrid Feature Detection Beyond Circles:**
-    - Integrating the detection of non-circular features like pipelines or building layouts associated with MGPs could reveal additional clues.
+    - While the paper focuses on circular structures, a hybrid approach could integrate the detection of non-circular features like pipelines or building layouts associated with MGPs. Combining geometric and OCR-based analyses might reveal additional contextual clues that current methods overlook.
 
 3. **Incorporating Temporal Dynamics:**
     - Analyzing multiple editions of maps from different years could help track changes in urban layouts, allowing the model to identify sites that may have been repurposed or demolished.
 
 4. **Integration of Bayesian Methods:**
-    - Adding a Bayesian layer could incorporate prior knowledge about likely MGP locations (e.g., proximity to railways or dense urban centers) into the classification process.
+    - Adding a Bayesian layer to the model could incorporate prior knowledge about likely MGP locations (e.g., proximity to railways or dense urban centers) into the classification process. I suspect that a probabilistic approach would be particularly useful in ambiguous cases.
 
 # Video: Code & Results Walkthrough
 
