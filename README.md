@@ -4,6 +4,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 # Video Code & Results Walkthrough
 
+[Watch on YouTube](https://www.youtube.com/watch?v=example](https://www.youtube.com/watch?v=Ow-c4VDXeEI)
+
 [Watch the video](assets/code_and_results_walkthrough.mp4)
 
 
