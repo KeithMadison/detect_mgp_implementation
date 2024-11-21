@@ -1,87 +1,70 @@
 # Summary & Review of J. Tollefson et al. Paper
 
-Background
+#### Background
 
 The J. Tollefson et al. paper addresses the challenge of locating undocumented manufactured gas plant (MGP) sites present in urban environments. These sites, active during the 19th and early 20th centuries, represent significant environmental hazards, but are largely absent from modern records. Traditional methods for identifying these sites (such as manual map inspection) are labor-intensive and inefficient. The solution proposed in this paper makes use of digitized Sanborn fire insurance maps (hosted by the Library of Congress) and a two-step machine learning pipeline to locate MGP sites. 
 
-Methodology
+#### Methodology
 
 The authors propose an automated pipeline (“Detect_MGP”), which uses machine learning techniques to identify potential MGP sites in digitized Sanborn fire insurance maps. The process involves:
 
-1. Data Preprocessing:
-    1. Sanborn fire insurance maps are scraped from the Library of Congress’ digital catalogue.
+1. **Data Preprocessing:**
+    * Sanborn fire insurance maps are scraped from the Library of Congress’ digital catalogue.
     * Circular structures (a common feature of MGP sites) are identified in these maps using the Hough Transform. Candidate regions are extracted from them, and are resized and standardized for further processing.
     * These regions are resized and standardized for further processing.
-2. Machine Learning Classification:
+2. **Machine Learning Classification:**
     * An ensemble model combining five convolutional neural networks (CNNs) and five multilayer perceptrons (MLPs) classifies the candidate regions as MGP or non-MGP.
     * CNNs are used for feature extraction from images, leveraging their ability to preserve spatial relationships and handle translation invariance.
     * MLPs complement CNNs by providing a lightweight classification approach, contributing to ensemble accuracy with minimal computational overhead.
-3. Ensemble Prediction:
+3. **Ensemble Prediction:**
     * Predictions from the CNN and MLP models are averaged and adjusted using optimized thresholds for final classification.
 4. Post-processing and Validation:
     * The method aggregates circular regions back to full map pages for manual verification, achieving an overall recall rate of ~90%.
-    * 
-The pipeline significantly reduces the time required for manual map inspection, enhancing scalability for historical environmental hazard research.
 
-Results 
+The pipeline significantly was found to significantly the time required for map inspection as compared to traditional (read: manual) methods, enhancing scalability for historical environmental hazard research.
+
+#### Results 
 
 The pipeline was evaluated using a dataset of 16,393 digitized Sanborn map pages:
 
-1. Reduction in Manual Effort:
-    * The pipeline reduced the time required for Sanborn map page assessment by 94%. For example, analyzing 100,000 map pages (previously taking ~138 hours) required less than 7 hours of automated processing.
-2. Performance Metrics:
-    * The ensemble model achieved a recall rate of ~90%, meaning it successfully identified the majority of actual manufactured gas plant (MGP) sites.
+1. **Reduction in Manual Effort:**
+    * The pipeline reduced the time required for Sanborn map page assessment by **94%**. For example, analyzing 100,000 map pages (previously taking ~138 hours) required less than 7 hours of automated processing.
+2. **Performance Metrics:**
+    * The ensemble model achieved a recall rate of **~90%**, meaning it successfully identified the majority of actual manufactured gas plant (MGP) sites.
     * The model demonstrated high accuracy in distinguishing MGP-related circular features from non-MGP infrastructure (e.g, water towers and cisterns).
     * Area Under the Curve (AUC) for the hybrid CNN-MLP model ranged from 0.92 to 0.96 across different test folds, indicating robust classification performance.
-3. Detection Improvements:
+3. **Detection Improvements:**
     * The pipeline identified 23 MGP sites in Washington state across 15 cities, a significant improvement compared to prior studies, which had only identified 14 sites in the entire Pacific Northwest using traditional (read: manual) methods.
-4. Pipeline Efficiency:
+4. **Pipeline Efficiency:**
     * The number of candidate map regions was progressively reduced across the pipeline stages, from 16,393 map pages to 206 final circular candidates, greatly narrowing the scope of required manual validation.
-5. Generalizability:
+5. **Generalizability:**
     * The pipeline performed consistently across diverse regions (e.g., Chicago, San Francisco, New Orleans) and map publication years, suggesting that it is adaptable to diverse urban environments and historical contexts.
 
-Potential Improvements and Alternative Approaches
+#### Potential Improvements and Alternative Approaches
 
-A number of potential improvements and alternative approaches occurred to me while reading this paper. I am by no means an expert in image processing, so I’ll divide these into the “obvious” and those that seem to me as reasonable but are as yet conjecture.
-
-1. “Obvious” Next Steps:
-    1. Incorporating Optical Character Recognition (OCR):
-        * Adding OCR to detect map labels (e.g., "gasometer" or "gasholder") could complement geometric feature detection, improving in particular the precision of the candidate selection step.
-    2. Enhanced Preprocessing:
-        * Incorporating multi-scale analysis to detect circular structures of varying sizes and orientations could reduce false positives and improve recall.
-        * Making use of alternative circle detection algorithms could improve the efficiency and accuracy of labeling in pre-processing. I found, for instance, that contour-based circular feature identification methods may outperform the Hough transform-based method employed in this paper.
-    3. Data Augmentation/Synthetic Data:
-        1. I suspect that it would be relatively straightforward to both augment the existing dataset (perhaps improving the detection of circular structures of varying sizes and orientations) and to produce synthetic data from it, providing an expanded training dataset.
-    4. Domain-Specific Data Augmentation:
-        * Incorporating spatial relationships between detected features (e.g., proximity to industrial zones) into the classification process could enhance model accuracy by aligning predictions with historical urban layouts.
-        * 
-2. “Less Obvious” Potential Improvements:
-    1. Using Transformer-based Models:
-        * Transformer architectures, such as Vision Transformers (ViTs), could offer a more sophisticated approach to capturing global contextual information in map images, potentially outperforming CNNs in feature extraction.
-
-Potential Improvements and Alternative Approaches
 While reading this paper, several potential improvements and alternative approaches came to mind. I am by no means an expert in image processing, so I’ll divide these into “obvious” next steps, which align with standard extensions to image processing pipelines, and “less obvious” ideas, which are speculative but could perhaps yield improvements.
 
-1. “Obvious” Next Steps
-1. Incorporating Optical Character Recognition (OCR):
-    * Adding OCR capabilities to detect and interpret textual labels on the maps (e.g., "gasometer," "gasholder") could provide an additional layer of validation for circular features identified as MGP-related.
-2. Enhanced Preprocessing:
-    * Multi-scale Analysis: Detecting circular structures at varying scales and orientations could mitigate issues arising from varying map resolutions or inconsistently drawn features. This step could help reduce false negatives and improve recall.
-    * Alternative Circle Detection Methods: Making use of alternative circle detection algorithms could improve the efficiency and accuracy of labeling in pre-processing. I found, for instance, that contour-based circular feature identification methods may outperform the Hough transform-based method employed in this paper.
-3. Data Augmentation and Synthetic Data:
-    * I suspect that it would be relatively straightforward to both augment the existing dataset (perhaps improving the detection of circular structures of varying sizes and orientations) and to produce synthetic data from it, providing an expanded training dataset.
-4. Domain-Specific Data Integration:
-    * Spatial Context Integration: Incorporating spatial relationships between detected features (proximity to industrial zones, for instance) into the classification process could enhance model accuracy by aligning predictions with historical urban layouts.
+1. **“Obvious” Next Steps**
+	1. **Incorporating Optical Character Recognition (OCR):**
+    		* Adding OCR capabilities to detect and interpret textual labels on the maps (e.g., "gasometer," "gasholder") could provide an additional layer of validation for circular features identified as MGP-related. The authors also acknowledge the potential for OCR to complement the geometric method, stating:
+ 		> "Results may be further improved by implementing optical character recognition (OCR) alongside a machine learning approach to MGP identification: Additional OCR analysis might provide a method to further filter CNN outputs or locate MGP-related map labels that fall outside of circular map regions."
+	2. **Enhanced Preprocessing:**
+    		* **Multi-scale Analysis:** Detecting circular structures at varying scales and orientations could mitigate issues arising from varying map resolutions or inconsistently drawn features. This step could help reduce false negatives and improve recall.
+ 		* **Alternative Circle Detection Methods:** Making use of alternative circle detection algorithms could improve the efficiency and accuracy of labeling in pre-processing. I found, for instance (as you will soon see), that contour-based circular feature identification methods may outperform the Hough transform-based method employed in this paper.
+	3.**Data Augmentation and Synthetic Data:**
+    		* I suspect that it would be relatively straightforward to both augment the existing dataset (perhaps improving the detection of circular structures of varying sizes and orientations) and to produce synthetic data from it, providing an expanded training dataset.
+	4. **Domain-Specific Data Integration:**
+    		* Spatial Context Integration: Incorporating spatial relationships between detected features (proximity to industrial zones, for instance) into the classification process could enhance model accuracy by aligning predictions with historical urban layouts.
 
-2. “Less Obvious” Potential Improvements
-1. Using Transformer-Based Models:
-    * Transformer architectures (such as Vision Transformers (ViTs)) could be used to capture both local and global patterns in the map images. Unlike CNNs (which excel at local feature extraction) ViTs process entire images as sequences of patches, enabling them to model relationships between features across the entire map. This could enhance the model's ability to differentiate between visually similar but contextually distinct features.
-2. Hybrid Feature Detection Beyond Circles:
-    * While the paper focuses on circular structures, a hybrid approach could integrate the detection of non-circular features like pipelines or building layouts associated with MGPs. Combining geometric and OCR-based analyses might reveal additional contextual clues that current methods overlook.
-3. Incorporating Temporal Dynamics:
-    * Analyzing multiple editions of maps from different years could help track changes in urban layouts, allowing the model to identify sites that may have been repurposed or demolished. Temporal context could improve recall and provide insights into the historical progression of MGPs.
+2. **“Less Obvious” Potential Improvements**
+	1. **Using Transformer-Based Models:**
+    		* Transformer architectures (such as Vision Transformers (ViTs)) could be used to capture both local and global patterns in the map images. Unlike CNNs (which excel at local feature extraction) ViTs process entire images as sequences of patches, enabling them to model relationships between features across the entire map. This could enhance the model's ability to differentiate between visually similar but contextually distinct features.
+	**2. Hybrid Feature Detection Beyond Circles:**
+    		* While the paper focuses on circular structures, a hybrid approach could integrate the detection of non-circular features like pipelines or building layouts associated with MGPs. Combining geometric and OCR-based analyses might reveal additional contextual clues that current methods overlook.
+	**3. Incorporating Temporal Dynamics:**
+    		* Analyzing multiple editions of maps from different years could help track changes in urban layouts, allowing the model to identify sites that may have been repurposed or demolished. Temporal context could improve recall and provide insights into the historical progression of MGPs.
 4. Integration of Bayesian Methods:
-    * Adding a Bayesian layer to the model could incorporate prior knowledge about likely MGP locations (e.g., proximity to railways or dense urban centers) into the classification process. I suspect that a probabilistic approach would be particularly useful in ambiguous cases.
+    		* Adding a Bayesian layer to the model could incorporate prior knowledge about likely MGP locations (e.g., proximity to railways or dense urban centers) into the classification process. I suspect that a probabilistic approach would be particularly useful in ambiguous cases.
 
 # Video: Code & Results Walkthrough
 
