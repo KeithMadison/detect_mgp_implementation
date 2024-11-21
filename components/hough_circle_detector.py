@@ -5,8 +5,11 @@ from typing import Dict, Any, Optional, List
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
+logging.basicConfig(
+	level=logging.INFO, 
+	format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+	datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 class HoughCircleDetector:
 	'''Detect circles in images using OpenCV's HoughCircles. This is an attempt at a literal implementation of the detector described in the J. Tollefson et.al. paper.'''

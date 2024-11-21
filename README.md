@@ -1,3 +1,10 @@
+# Summary & Review of J. Tollefson et al. Paper
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+# Video Code & Results Walkthrough
+
+![Video code and results walthrough.](/assets/code_and_results_walkthrough.mp4)
 
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
 
@@ -48,7 +55,7 @@ project/
 │   ├── positive_samples/                 # Samples identified as positive (potential MGP sites)
 │   │   ├── hough/
 │   │   └── contour/
-│   └── negative_samples/                 # Samples identified as negative (non-MGP sites)
+│   └── negative_samples/                 # Samples identified as negative (maps containing no identified potential MGP sites)
 │       ├── hough/
 │       └── contour/
 │
