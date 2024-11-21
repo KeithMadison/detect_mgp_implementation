@@ -48,7 +48,7 @@ The pipeline was evaluated using a dataset of 16,393 digitized Sanborn map pages
 
 ## Potential Improvements and Alternative Approaches
 
-While reading this paper, several potential improvements and alternative approaches came to mind. These are divided into “obvious” next steps, aligning with standard extensions to image processing pipelines, and “less obvious” ideas, which are speculative but could yield improvements.
+While reading this paper, several potential improvements and alternative approaches came to mind. I am by no means an expert in image processing, so I have divided these into “obvious” next steps (aligning with standard extensions to image processing pipelines) and “less obvious” ideas, which are speculative but could perhaps yield improvements.
 
 ### “Obvious” Next Steps
 1. **Incorporating Optical Character Recognition (OCR):**
