@@ -4,11 +4,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 # Video Code & Results Walkthrough
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow-c4VDXeEI" frameborder="0" allowfullscreen></iframe>
+ - [Watch on YouTube](https://www.youtube.com/watch?v=example](https://www.youtube.com/watch?v=Ow-c4VDXeEI)
 
-[Watch on YouTube](https://www.youtube.com/watch?v=example](https://www.youtube.com/watch?v=Ow-c4VDXeEI)
-
-[Watch the video](assets/code_and_results_walkthrough.mp4)
+ - [View in repository](assets/code_and_results_walkthrough.mp4)
 
 
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
