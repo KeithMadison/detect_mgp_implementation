@@ -35,6 +35,8 @@ class ContourCircleDetector:
 			margin (float): Proportional margin to include around detected circles when cropping.
 			canny_thresholds (Tuple[int, int]): Thresholds for Canny edge detection.
 		'''
+		if margin < 0:
+			raise ValueError("Margin must be non-negative.")
 		if min_radius <= 0 or max_radius <= 0:
 			raise ValueError("Radii must be positive integers.")
 		if min_radius > max_radius:
