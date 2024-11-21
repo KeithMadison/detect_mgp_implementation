@@ -4,7 +4,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 # Video Code & Results Walkthrough
 
-![Video code and results walthrough.](/assets/code_and_results_walkthrough.mp4)
+<video src="assets/code_and_results_walkthrough.mp4" controls width="640">
+Your browser does not support the video tag. Open the /assets/ directory to view.
+</video>
+
 
 # Manufactured Gas Production (MGP) Site Semi-Automatic Labeler
 
