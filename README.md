@@ -52,7 +52,7 @@ While reading this paper, several potential improvements and alternative approac
 
 ### “Obvious” Next Steps
 1. **Incorporating Optical Character Recognition (OCR):**
-    - Adding OCR capabilities to detect and interpret textual labels on the maps (e.g., "gasometer," "gasholder") could provide an additional layer of validation for circular features identified as MGP-related.
+    - Adding OCR capabilities to detect and interpret textual labels on the maps (e.g., "gasometer," "gasholder") could provide an additional layer of validation for circular features identified as MGP-related. The authors also acknowledge the potential for OCR to complement the geometric method, stating:
     > "Results may be further improved by implementing optical character recognition (OCR) alongside a machine learning approach to MGP identification: Additional OCR analysis might provide a method to further filter CNN outputs or locate MGP-related map labels that fall outside of circular map regions."
 
 2. **Enhanced Preprocessing:**
